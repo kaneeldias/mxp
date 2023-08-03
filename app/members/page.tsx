@@ -20,27 +20,21 @@ import Search from "@mui/icons-material/Search";
 import Link from 'next/link'
 import MemberListData from "@/app/members/MemberListData";
 
-const StyledTextField = styled(TextField)(({theme}) => ({
-    "& .MuiOutlinedInput-input": {
-        padding: "5px 5px"
-    }
-}));
-
-const StyledTableContainer = styled(TableContainer)(({theme}) => ({
+const StyledTableContainer = styled(TableContainer)(() => ({
     "& .MuiPaper-root": {
         borderRadius: 0,
         boxShadow: "none"
     }
 }));
 
-const StyledTable = styled(Table)(({theme}) => ({
+const StyledTable = styled(Table)(() => ({
     "& .MuiTableCell-root": {
         padding: 15,
         border: "none"
     }
 }));
 
-const StyledTableCell = styled(TableCell)(({theme}) => ({
+const StyledTableCell = styled(TableCell)(() => ({
     [`&.${tableCellClasses.head}`]: {
         color: "rgba(0,0,0,0.7)",
         fontWeight: "bold",
@@ -53,7 +47,7 @@ const StyledTableCell = styled(TableCell)(({theme}) => ({
     }
 }));
 
-const StyledTableRow = styled(TableRow)(({theme}) => ({
+const StyledTableRow = styled(TableRow)(() => ({
     "&:hover": {
         backgroundColor: "#EEEEEE"
     },

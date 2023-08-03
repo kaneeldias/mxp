@@ -2,12 +2,11 @@ import {Member, Position} from "@/app/_types/MemberTypes";
 
 export function convertDateToReadable(date: string): string {
     const date2 = new Date(date);
-    const readableDate = date2.toLocaleDateString("en-US", {
+    return date2.toLocaleDateString("en-US", {
         year: "numeric",
         month: "long",
         day: "numeric",
     });
-    return readableDate;
 }
 
 export function sortMemberPositions(positions: Position[]): Position[] {
