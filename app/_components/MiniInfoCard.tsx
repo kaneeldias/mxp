@@ -9,17 +9,17 @@ type MiniInfoCardProps = {
     link?: string;
 };
 
-const titleStyleClass = "text-xs text-slate-500 font-bold"
-const valueStyleClass = "text-sm flex flex-row items-center space-x-2"
+const titleStyleClass = "text-lg text-slate-500 font-bold"
+const valueStyleClass = "text-sm flex flex-row items-center space-x-2 text-xl"
 
 export default function MiniInfoCard(props: MiniInfoCardProps) {
     return (
-        <div>
+        <div className="space-y-1">
             <div className={titleStyleClass}>{props.title}</div>
 
             {props.link ? (
                 <Link href={props.link}>
-                    <div className={`${valueStyleClass} hover:underline`}>
+                    <div className={`${valueStyleClass}`}>
                         {props.image &&
                             <Image src={props.image} alt={props.title} width={20} height={20}
                                    className="rounded-full"/>}

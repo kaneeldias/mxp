@@ -1,9 +1,9 @@
 import {Position, PositionInfoResponse} from "@/app/_types/MemberTypes";
 import React from "react";
-import InitialSurvey from "@/app/members/[expaId]/position/[positionId]/survey/initial/InitialSurvey";
-import {InitialSurveyResponse} from "@/app/_types/SurveyTypes";
+import {InitialSurveyResponse, SurveyType} from "@/app/_types/SurveyTypes";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import SurveyData from "@/app/members/[expaId]/position/[positionId]/survey/SurveyData";
+import InitialSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/InitialSurvey";
 
 export let metadata = {
     title: 'AIESEC Member'
@@ -22,11 +22,11 @@ const getPositionInfo = async (positionId: string): Promise<PositionInfoResponse
     return await response.json();
 };
 
-const getSurveyResponse = async (expaId: string, positionId: string): Promise<InitialSurveyResponse> => {
-    const url = new URL("http://127.0.0.1:3000/api/survey");
+const getSurveyResponse = async (expaId: string, positionId: string, type: SurveyType): Promise<InitialSurveyResponse> => {
+    const url = new URL(`${process.env.BASE_URL}/api/survey`);
     url.searchParams.set("expaId", expaId);
     url.searchParams.set("positionId", positionId);
-    url.searchParams.set("type", "initial");
+    url.searchParams.set("type", type);
 
     const response: Response = await fetch(url.toString(), {cache: "no-cache"});
 
@@ -39,7 +39,9 @@ const getSurveyResponse = async (expaId: string, positionId: string): Promise<In
 };
 
 
-export default async function InitialSurveyPage({params}: { params: { expaId: string, positionId: string } }) {
+export default async function InitialSurveyPage({params}: {
+    params: { expaId: string, positionId: string, type: SurveyType }
+}) {
     let position: Position | undefined;
     let surveyResponse: InitialSurveyResponse | undefined;
 
@@ -53,18 +55,23 @@ export default async function InitialSurveyPage({params}: { params: { expaId: st
     }
 
     try {
-        surveyResponse = await getSurveyResponse(params.expaId, params.positionId);
+        surveyResponse = await getSurveyResponse(params.expaId, params.positionId, params.type);
     } catch (e) {
         console.log(e);
     }
 
     return (
         <>
-            <SurveyData position={position!} type="Initial Survey"/>
+            <SurveyData position={position!} type={params.type}/>
 
-            <div className="p-10">
-                <PositionInfoBox position={position!}/>
-                <InitialSurvey position={position!} surveyResponse={surveyResponse!}/>
+            <div className="p-10 inline-flex flex-row space-x-10">
+                <div>
+                    <PositionInfoBox position={position!}/>
+                </div>
+
+                {params.type === SurveyType.INITIAL &&
+                    <InitialSurvey position={position!} surveyResponse={surveyResponse!}/>}
+
             </div>
 
 

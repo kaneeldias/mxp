@@ -38,3 +38,5 @@ next-env.d.ts
 /firestore-debug.log
 /package-lock.json
 /ui-debug.log
+/.env.prod
+/.env

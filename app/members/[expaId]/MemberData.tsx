@@ -21,10 +21,10 @@ export function getMemberBreadcrumbs(member: Member): Breadcrumb[] {
     breadcrumbs.push(
         {
             label: (
-                <div className="flex flex-row space-x-2">
-                    <Image src={member.profile_photo!} alt={`${member.full_name} profile photo`} width={20}
-                           height={20} className="rounded-full"/>
-                    <span>{member.full_name!}</span>
+                <div className="flex flex-row space-x-4 items-center justify-center">
+                    <Image src={member.profile_photo!} alt={`${member.full_name} profile photo`} width={40}
+                           height={40} className="rounded-full"/>
+                    <span className="text-lg">{member.full_name!}</span>
                 </div>
             ), href: `/members/${member.id}`
         }

@@ -40,10 +40,11 @@ const StyledTableCell = styled(TableCell)(() => ({
         fontWeight: "bold",
         borderBottomWidth: "1px",
         borderBottomColor: "rgba(0,0,0,0.2)",
-        borderBottomStyle: "solid"
+        borderBottomStyle: "solid",
+        fontSize: 18
     },
     [`&.${tableCellClasses.body}`]: {
-        fontSize: 12
+        fontSize: 16
     }
 }));
 
@@ -64,7 +65,7 @@ const getMembers = async (
 ): Promise<MemberResponse> => {
     // return [];
 
-    const url = new URL("http://127.0.0.1:3000/api/mxp");
+    const url = new URL(`${process.env.BASE_URL}/api/mxp`);
     url.searchParams.set("page", page.toString());
     if (searchValue && searchValue !== "") {
         url.searchParams.set("search", searchValue);
@@ -201,8 +202,8 @@ export default function Members() {
                                                 {member.full_name}
                                             </Link>
                                         </StyledTableCell>
-                                        <StyledTableCell>{member.home_mc.full_name}</StyledTableCell>
-                                        <StyledTableCell>{member.home_lc.full_name}</StyledTableCell>
+                                        <StyledTableCell>{member.home_mc!.full_name}</StyledTableCell>
+                                        <StyledTableCell>{member.home_lc!.full_name}</StyledTableCell>
                                     </StyledTableRow>
                                 ))
                             }

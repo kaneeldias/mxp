@@ -19,7 +19,7 @@ export function getMembersStartBreadcrumbs(): Breadcrumb[] {
     breadcrumbs.push({
         label:
             (
-                <PeopleIcon fontSize="small"/>
+                <PeopleIcon fontSize="large"/>
             ), href: "/members"
     });
     return breadcrumbs;

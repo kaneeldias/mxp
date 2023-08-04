@@ -2,7 +2,7 @@ export interface CreateSurveyResponseRequest {
     survey: {
         expaId: string,
         positionId: string,
-        type: string,
+        type: SurveyType,
     },
     formValues: {
         nps: number,
@@ -10,11 +10,17 @@ export interface CreateSurveyResponseRequest {
     }
 }
 
+export enum SurveyType {
+    INITIAL = "initial",
+    MID = "mid",
+    FINAL = "final"
+}
+
 export interface GetSurveyResponseRequest {
     survey: {
         expaId: string,
         positionId: string,
-        type: string
+        type: SurveyType
     }
 }
 

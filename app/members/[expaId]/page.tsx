@@ -10,7 +10,7 @@ export let metadata = {
     title: 'AIESEC Member'
 }
 const getMemberInfo = async (expaId: string): Promise<MemberInfoResponse> => {
-    const url = new URL("http://127.0.0.1:3000/api/member");
+    const url = new URL(`${process.env.BASE_URL}/api/member`);
     url.searchParams.set("expaId", expaId);
 
     const response: Response = await fetch(url.toString(), {cache: "no-cache"});
@@ -41,28 +41,36 @@ export default async function MemberInfo({params}: { params: { expaId: string } 
         <>
             <MemberData member={memberInfo!}/>
 
-            <div className="m-5 flex justify-center">
+            <div className="m-5 flex justify-center w-full">
 
                 {memberInfo != undefined &&
-                    <div className="flex flex-col rounded-md justify-start items-start w-full space-x-10">
+                    <div className="flex flex-row rounded-md justify-start items-start w-full space-x-10 p-10">
 
-                        <MemberInfoCard member={memberInfo}/>
+                        <div className="flex-shrink-0">
+                            <MemberInfoCard member={memberInfo}/>
+                        </div>
 
-                        {(memberInfo.member_positions && memberInfo.member_positions.length != 0) ? (
-                            <div className="mt-10">
-                                {memberInfo.member_positions.map((position: Position) => (
-                                    <Link href={`/members/${memberInfo?.id}/position/${position.id}`} key={position.id}>
-                                        <MemberPositionCard position={position}/>
-                                    </Link>
-                                ))
-                                }
-                            </div>
-                        ) : (
-                            <div className="mt-10">
-                                No positions found.
-                            </div>
-                        )
-                        }
+                        <div className="flex-grow items-center justify-center">
+
+                            {(memberInfo.member_positions && memberInfo.member_positions.length != 0) ? (
+                                <div className="mt-3 flex-col">
+                                    <div className="text-3xl font-bold text-gray-800 mb-5">Positions</div>
+
+                                    {memberInfo.member_positions.map((position: Position) => (
+                                        <Link href={`/members/${memberInfo?.id}/position/${position.id}`}
+                                              key={position.id}>
+                                            <MemberPositionCard position={position}/>
+                                        </Link>
+                                    ))
+                                    }
+                                </div>
+                            ) : (
+                                <div className="mt-10">
+                                    No positions found.
+                                </div>
+                            )
+                            }
+                        </div>
                     </div>
                 }
 

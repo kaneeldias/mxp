@@ -15,7 +15,7 @@ export default function AButton(
 ) {
     return (
         <div
-            className="p-2 px-4 bg-aiesec-blue rounded-md font-bold text-sm inline-block text-white hover:bg-blue-600 transition duration-300 hover:cursor-pointer"
+            className="p-3 px-6 bg-aiesec-blue rounded-md font-bold text-lg inline-block text-white hover:bg-blue-700 transition duration-300 hover:cursor-pointer"
             onClick={onClick}
         >
             {text}

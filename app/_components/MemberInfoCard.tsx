@@ -13,20 +13,20 @@ export default function MemberInfoCard(props: MemberInfoCardProps) {
     const memberInfo = props.member;
 
     return (
-        <div className="space-x-5 flex flex-row justify-center items-stretch mr-16">
+        <div className="space-x-10 flex flex-row justify-center items-stretch mr-16">
             {memberInfo.profile_photo &&
                 <Image
                     src={memberInfo.profile_photo}
-                    width={100}
-                    height={100}
+                    width={150}
+                    height={150}
                     alt="Profile photo"
                     className="rounded-full"
                     priority
                 />
             }
-            <div className="flex flex-col justify-center space-y-1">
-                <div className="text-xl font-bold">{memberInfo.full_name}</div>
-                <div className="text-sm text-slate-500">{getLCAndMC(memberInfo)}</div>
+            <div className="flex flex-col justify-center space-y-3">
+                <div className="text-3xl font-bold text-gray-800">{memberInfo.full_name}</div>
+                <div className="text-xl text-gray-400">{getLCAndMC(memberInfo)}</div>
             </div>
         </div>
     );

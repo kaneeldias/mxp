@@ -37,8 +37,8 @@ export function removeAiesecInPrefix(input: string): string {
 }
 
 export function getLCAndMC(member: Member): string {
-    const lc = member.home_lc.full_name;
-    const mc = member.home_mc.full_name;
+    const lc = member.home_lc!.full_name;
+    const mc = member.home_mc!.full_name;
 
     return `${lc},  ${removeAiesecInPrefix(mc)}`;
 }

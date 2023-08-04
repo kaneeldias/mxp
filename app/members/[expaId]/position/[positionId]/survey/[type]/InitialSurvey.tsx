@@ -4,7 +4,7 @@ import {Position} from "@/app/_types/MemberTypes";
 import React, {useState} from "react";
 import {Rating} from "@/lib/mui";
 import AButton from "@/app/_components/AButton";
-import {CreateSurveyResponseRequest, InitialSurveyResponse} from "@/app/_types/SurveyTypes";
+import {CreateSurveyResponseRequest, InitialSurveyResponse, SurveyType} from "@/app/_types/SurveyTypes";
 import LoadingOverlay from "@/app/_components/LoadingOverlay";
 import {Alert, Snackbar} from "@mui/material";
 
@@ -21,7 +21,7 @@ export default function InitialSurvey(props: { position: Position, surveyRespons
 
         const requestData: CreateSurveyResponseRequest = {
             survey: {
-                type: "initial",
+                type: SurveyType.INITIAL,
                 expaId: props.position.person.id,
                 positionId: props.position.id,
             },
@@ -54,20 +54,19 @@ export default function InitialSurvey(props: { position: Position, surveyRespons
 
     return (
         <>
-            <div className="mt-10 bg-slate-100 inline-block p-5 rounded-lg relative">
+            <div className="bg-gray-100 inline-block p-10 m-5 rounded-lg relative space-y-8">
 
                 {loading && <LoadingOverlay/>}
 
-
                 <div className="text-3xl font-bold text-slate-700">Initial Survey</div>
-                <div className="mt-5">
-                    <div className="text-sm">How would you rate this experience?</div>
+                <div className="mt-5 space-y-2">
+                    <div className="text-xl">How would you rate this experience?</div>
                     <Rating name="customized-10" max={10} size="large" defaultValue={nps} disabled={loading}
                             onChange={(event, newValue) => setNps(newValue || 0)}/>
                 </div>
 
-                <div className="mt-5">
-                    <div className="text-sm">Did it develop your leadership skills?</div>
+                <div className="mt-5 space-y-2">
+                    <div className="text-xl">Did it develop your leadership skills?</div>
                     <Rating name="customized-10" max={10} size="large" defaultValue={lps} disabled={loading}
                             onChange={(event, newValue) => {
                                 event.preventDefault();

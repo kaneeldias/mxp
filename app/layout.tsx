@@ -24,7 +24,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
 
         <AppProvider>
             <div className="flex flex-col h-screen ml-[74px]">
-                <BreadcrumbsBar breadcrumbs2={[]}/>
+                <BreadcrumbsBar/>
 
                 <div className="w-full">
                     {children}

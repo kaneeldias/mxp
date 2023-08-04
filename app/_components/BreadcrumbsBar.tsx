@@ -2,9 +2,8 @@
 
 import React, {useContext} from 'react';
 import {Breadcrumbs} from "../../lib/mui";
-import {NavigateNextIcon} from "../../lib/icons-material";
+import {HomeIcon, NavigateNextIcon} from "../../lib/icons-material";
 import Link from "next/link";
-import Image from "next/image";
 import {AppContext} from "@/app/_context/AppContext";
 
 export type Breadcrumb = {
@@ -24,7 +23,7 @@ export default function BreadcrumbsBar() {
     breadcrumbs.forEach((breadcrumb, index) => {
         if (breadcrumb.href) {
             breadcrumbsJSX.push(
-                <Link key={index + 1} color="inherit" href={breadcrumb.href} className="hover:underline">
+                <Link key={index + 1} color="inherit" href={breadcrumb.href} className="hover:underline text-lg">
                     {breadcrumb.label}
                 </Link>
             );
@@ -40,9 +39,9 @@ export default function BreadcrumbsBar() {
     return (
         <div className="p-5 border-b-2">
             <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="small"/>}
+                separator={<NavigateNextIcon fontSize="large"/>}
                 aria-label="breadcrumb"
-                className="text-sm"
+                className="text-md"
             >
                 {breadcrumbsJSX}
             </Breadcrumbs>
@@ -53,11 +52,11 @@ export default function BreadcrumbsBar() {
 export function getHomeBreadcrumbs(): Breadcrumb[] {
     return [
         {
-            label: (
-                <Image src="/aiesec_member_logo_blue.png" alt="AIESEC Member logo"
-                       width={30}
-                       height={30} className="rounded-full"/>
-            ), href: "/"
+            label:
+                (
+                    <HomeIcon fontSize="large"/>
+                ), href: "/"
+
         }
     ];
 }

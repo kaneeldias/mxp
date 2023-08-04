@@ -19,7 +19,7 @@ export function getPositionBreadcrumbs(position: Position): Breadcrumb[] {
     let breadcrumbs = getMemberBreadcrumbs(position.person!);
     breadcrumbs.push(
         {
-            label: `${position.title}xxx`,
+            label: `${position.title}`,
             href: `/members/${position.person.id}/position/${position.id}`
         }
     );

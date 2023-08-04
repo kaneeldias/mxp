@@ -1,7 +1,6 @@
 import {Position, PositionInfoResponse} from "@/app/_types/MemberTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
 import {convertDateToReadable} from "@/utils/utils";
-import PositionStatusIndicator from "@/app/_components/PositionStatusIndicator";
 import React from "react";
 import SurveyStatusBox from "@/app/members/[expaId]/position/[positionId]/SurveyStatusBox";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
@@ -11,7 +10,7 @@ export let metadata = {
     title: 'AIESEC Member'
 }
 const getPositionInfo = async (positionId: string): Promise<PositionInfoResponse> => {
-    const url = new URL("http://127.0.0.1:3000/api/position");
+    const url = new URL(`${process.env.BASE_URL}/api/position`);
     url.searchParams.set("positionId", positionId);
 
     const response: Response = await fetch(url.toString());
@@ -39,34 +38,36 @@ export default async function PositionInfo({params}: { params: { expaId: string,
         <>
             <PositionData position={position!}/>
 
-            <div className="p-10">
+            <div className="p-[40px]">
                 <PositionInfoBox position={position!}/>
 
-                <div className="mt-5 space-y-5">
-                    {position?.status && <PositionStatusIndicator type={position.status}/>}
+                <div className="ml-[215px] flex flex-row space-x-16 mt-10">
+                    <div className="flex flex-col space-y-8">
+                        <div className="text-2xl font-bold text-gray-800">Position Info</div>
 
-                    {position?.role?.name && <MiniInfoCard title="Role" value={position.role.name}/>}
-                    {position?.committee_department?.name &&
-                        <MiniInfoCard title="Department" value={position.committee_department.name}/>}
-                    {position?.function?.name && <MiniInfoCard title="Function" value={position.function.name}/>}
-                    {position?.duration?.name && <MiniInfoCard title="Duration" value={position.duration.name}/>}
+                        {position?.role?.name && <MiniInfoCard title="Role" value={position.role.name}/>}
+                        {position?.committee_department?.name &&
+                            <MiniInfoCard title="Department" value={position.committee_department.name}/>}
+                        {position?.function?.name && <MiniInfoCard title="Function" value={position.function.name}/>}
+                        {position?.duration?.name && <MiniInfoCard title="Duration" value={position.duration.name}/>}
 
-                    <div className="flex flex-row space-x-5">
-                        {position?.start_date &&
-                            <MiniInfoCard title="Start date" value={convertDateToReadable(position.start_date)}/>}
-                        {position?.end_date &&
-                            <MiniInfoCard title="End date" value={convertDateToReadable(position.end_date)}/>}
+                        <div className="flex flex-row space-x-24">
+                            {position?.start_date &&
+                                <MiniInfoCard title="Start date" value={convertDateToReadable(position.start_date)}/>}
+                            {position?.end_date &&
+                                <MiniInfoCard title="End date" value={convertDateToReadable(position.end_date)}/>}
+                        </div>
+
+                        {position?.reports_to && <MiniInfoCard title="Team leader" value={position.reports_to.full_name}
+                                                               image={position.reports_to.profile_photo}
+                                                               link={`/members/${position.reports_to.id}`}/>}
                     </div>
 
-                    {position?.reports_to && <MiniInfoCard title="Team leader" value={position.reports_to.full_name}
-                                                           image={position.reports_to.profile_photo}
-                                                           link={`/members/${position.reports_to.id}`}/>}
-                </div>
+                    <div>
+                        <SurveyStatusBox position={position!} expaId={params.expaId} positionId={params.positionId}/>
+                    </div>
 
-                <div className="mt-10">
-                    <SurveyStatusBox position={position!} expaId={params.expaId} positionId={params.positionId}/>
                 </div>
-
             </div>
 
 
