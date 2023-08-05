@@ -70,11 +70,9 @@ export async function GET(request: NextRequest) {
             return error
         });
 
-    if (response instanceof ApolloError) {
-        console.log("ApolloError");
-        return NextResponse.json({
-            "message": response,
-        }, {status: 500});
+    if (response instanceof Error) {
+        console.error(response.message);
+        return NextResponse.json({"message": response.message,}, {status: 500});
     }
 
     return NextResponse.json(response, {status: 200});

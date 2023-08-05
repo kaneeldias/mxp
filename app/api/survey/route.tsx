@@ -41,7 +41,7 @@ export async function GET(request: NextRequest) {
         const doc = await docRef.get();
 
         if (!doc.exists) {
-            throw new Error("Survey response does not exist.");
+            return NextResponse.json({}, {status: 200});
         }
 
         return NextResponse.json(doc.data(), {status: 200});

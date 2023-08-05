@@ -42,3 +42,24 @@ export function getLCAndMC(member: Member): string {
 
     return `${lc},  ${removeAiesecInPrefix(mc)}`;
 }
+
+export async function checkAPIResponseForErrors(response: Response): Promise<void> {
+    if (response.status != 200) {
+
+        // if response is JSON
+        if (response.headers.get("content-type")?.includes("application/json")) {
+            const responseBody = await response.json();
+            if (responseBody.message) {
+                throw new Error(responseBody.message);
+            }
+            throw new Error(responseBody.toString());
+        }
+
+        // if response is text
+        if (response.headers.get("content-type")?.includes("text/plain")) {
+            throw new Error(await response.text());
+        }
+
+        throw new Error(response.statusText);
+    }
+}

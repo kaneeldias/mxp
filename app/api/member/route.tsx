@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
     const expaId: string = request.nextUrl.searchParams.get("expaId") as string;
 
     const httpLink = createHttpLink({uri: 'https://gis-api.aiesec.org/graphql'});
-    
+
     const authLink = setContext((_, {headers}) => {
         return {
             headers: {
@@ -81,10 +81,8 @@ export async function GET(request: NextRequest) {
         });
 
     if (response instanceof ApolloError) {
-        console.log("ApolloError");
-        return NextResponse.json({
-            "message": response,
-        }, {status: 500});
+        console.error(response.message);
+        return NextResponse.json({"message": response.message}, {status: 500});
     }
 
     return NextResponse.json(response, {status: 200});
