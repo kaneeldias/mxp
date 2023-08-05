@@ -12,24 +12,47 @@ export type Breadcrumb = {
 }
 
 export default function BreadcrumbsBar() {
-    let breadcrumbs = getHomeBreadcrumbs();
+    let breadcrumbs: Breadcrumb[] = [];
 
     const context = useContext(AppContext);
     if (context != null) {
         breadcrumbs = context.breadcrumbs.value;
     }
     let breadcrumbsJSX: React.JSX.Element[] = [];
+    let breadcrumbsJSXMobile: React.JSX.Element[] = [];
+    const length = breadcrumbs.length;
 
     breadcrumbs.forEach((breadcrumb, index) => {
+        let styles = "";
+        if ((length - index - 1) < 3) {
+            if (breadcrumb.href) {
+                breadcrumbsJSXMobile.push(
+                    <Link key={index + 1} color="inherit" href={breadcrumb.href}
+                          className={`hover:underline text-xs md:text-xl ${styles}`}
+                    >
+                        {breadcrumb.label}
+                    </Link>
+                );
+            } else {
+                breadcrumbsJSXMobile.push(
+                    <span key={index + 1} color="inherit" className={`${styles}`}>
+                    {breadcrumb.label}
+                </span>
+                );
+            }
+        }
+
         if (breadcrumb.href) {
             breadcrumbsJSX.push(
-                <Link key={index + 1} color="inherit" href={breadcrumb.href} className="hover:underline text-lg">
+                <Link key={index + 1} color="inherit" href={breadcrumb.href}
+                      className={`hover:underline text-xs md:text-xl ${styles}`}
+                >
                     {breadcrumb.label}
                 </Link>
             );
         } else {
             breadcrumbsJSX.push(
-                <span key={index + 1} color="inherit">
+                <span key={index + 1} color="inherit" className={`${styles}`}>
                     {breadcrumb.label}
                 </span>
             );
@@ -37,15 +60,27 @@ export default function BreadcrumbsBar() {
     });
 
     return (
-        <div className="p-5 border-b-2">
-            <Breadcrumbs
-                separator={<NavigateNextIcon fontSize="large"/>}
-                aria-label="breadcrumb"
-                className="text-md"
-            >
-                {breadcrumbsJSX}
-            </Breadcrumbs>
-        </div>
+        <>
+            <div className="p-5 border-b-2 hidden md:block">
+                <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="large"/>}
+                    aria-label="breadcrumb"
+                    className="text-md"
+                >
+                    {breadcrumbsJSX}
+                </Breadcrumbs>
+            </div>
+
+            <div className="p-2 border-b-2 block md:hidden">
+                <Breadcrumbs
+                    separator={<NavigateNextIcon fontSize="small"/>}
+                    aria-label="breadcrumb"
+                    className="text-xs md:text-xl"
+                >
+                    {breadcrumbsJSXMobile}
+                </Breadcrumbs>
+            </div>
+        </>
     );
 };
 
@@ -54,7 +89,10 @@ export function getHomeBreadcrumbs(): Breadcrumb[] {
         {
             label:
                 (
-                    <HomeIcon fontSize="large"/>
+                    <>
+                        <HomeIcon fontSize="large" className="hidden md:block"/>
+                        <HomeIcon fontSize="small" className="block md:hidden"/>
+                    </>
                 ), href: "/"
 
         }

@@ -19,10 +19,17 @@ export function getPositionBreadcrumbs(position: Position): Breadcrumb[] {
     let breadcrumbs = getMemberBreadcrumbs(position.person!);
     breadcrumbs.push(
         {
-            label: `${position.title}`,
+            label: `${truncatePosition(position.title)}`,
             href: `/members/${position.person.id}/position/${position.id}`
         }
     );
     return breadcrumbs;
 
+}
+
+function truncatePosition(str: string) {
+    if (str.length > 25) {
+        return str.substring(0, 25 - 3) + '...';
+    }
+    return str;
 }

@@ -3,6 +3,7 @@ import {SurveyStatuses} from "@/app/_types/SurveyTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
 import SurveyStatusIndicator from "@/app/_components/SurveyStatusIndicator";
 import {Position} from "@/app/_types/MemberTypes";
+import {getAccessToken} from "@/utils/auth_utils";
 
 interface SurveyStatusBoxProps {
     expaId: string,
@@ -15,7 +16,12 @@ const getSurveyStatusInfo = async (expaId: string, positionId: string): Promise<
     url.searchParams.set("expaId", expaId);
     url.searchParams.set("positionId", positionId);
 
-    const response: Response = await fetch(url.toString(), {cache: "no-cache"});
+    const response: Response = await fetch(url.toString(), {
+        cache: "no-cache",
+        headers: {
+            'Authorization': await getAccessToken()
+        }
+    });
 
     if (response.status != 200) {
         console.log(await response.json());
@@ -37,9 +43,9 @@ export default async function SurveyStatusBox(props: SurveyStatusBoxProps) {
     }
 
     return (
-        <div className="space-y-8 bg-gray-100 p-5 rounded-lg">
-            <div className="text-2xl font-bold text-gray-800">Surveys</div>
-            <div className="flex flex-row space-x-16">
+        <div className="space-y-4 md:space-y-8 bg-gray-100 p-5 rounded-lg mr-5">
+            <div className="text-xl md:text-2xl font-bold text-gray-800">Surveys</div>
+            <div className="flex flex-row space-x-4 md:space-x-16">
                 {surveyStatuses?.initial &&
                     <MiniInfoCard title="Initial"
                                   link={`/members/${position?.person.id}/position/${position?.id}/survey/initial`}

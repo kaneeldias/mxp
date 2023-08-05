@@ -10,20 +10,22 @@ export const metadata = {
 }
 
 export default function RootLayout({children,}: { children: React.ReactNode }) {
+
     return (
         <html lang="en">
         <Head>
             <link rel="icon" href="/favicon.ico"/>
             <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         </Head>
         <body className="flex flex-col h-screen">
 
-        <div className="flex-none min-h-screen fixed">
+        <div className="flex-none min-h-screen fixed hidden md:block">
             <LeftNav/>
         </div>
 
         <AppProvider>
-            <div className="flex flex-col h-screen ml-[74px]">
+            <div className="flex flex-col h-screen md:ml-[74px]">
                 <BreadcrumbsBar/>
 
                 <div className="w-full">

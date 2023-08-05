@@ -12,7 +12,7 @@ type StatusIndicatorProps = {
     type: string;
 };
 
-const styleClass = "flex inline-block text-xs rounded-full text-white p-0 w-32 items-center justify-center font-bold opacity-80"
+const styleClass = "flex inline-block text-[6px] md:text-xs rounded-full text-white p-0 w-16 md:w-32 h-5 md:h-8 items-center justify-center font-bold opacity-80 flex-shrink-0 pt-[2px]"
 const buttonColours = {
     [Status.ACTIVE]: "bg-green-600",
     [Status.COMPLETED]: "bg-blue-600",

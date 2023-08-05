@@ -1,7 +1,7 @@
 "use client"
 
 import {createContext, Dispatch, SetStateAction, useState} from "react";
-import {Breadcrumb, getHomeBreadcrumbs} from "@/app/_components/BreadcrumbsBar";
+import {Breadcrumb} from "@/app/_components/BreadcrumbsBar";
 
 export type AppData = {
     breadcrumbs: {
@@ -13,7 +13,7 @@ export type AppData = {
 export const AppContext = createContext<AppData | null>(null);
 
 export function AppProvider({children}: { children: React.ReactNode }) {
-    const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>(getHomeBreadcrumbs());
+    const [breadcrumbs, setBreadcrumbs] = useState<Breadcrumb[]>([]);
 
     const initialAppContext: AppData = {
         breadcrumbs: {
@@ -21,7 +21,6 @@ export function AppProvider({children}: { children: React.ReactNode }) {
             set: setBreadcrumbs
         }
     }
-
 
     return (
         <AppContext.Provider value={initialAppContext}>

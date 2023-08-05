@@ -1,107 +1,44 @@
 "use client"
 
-import {Position} from "@/app/_types/MemberTypes";
-import React, {useState} from "react";
+import React, {Dispatch, SetStateAction} from "react";
 import {Rating} from "@/lib/mui";
-import AButton from "@/app/_components/AButton";
-import {CreateSurveyResponseRequest, InitialSurveyResponse, SurveyType} from "@/app/_types/SurveyTypes";
-import LoadingOverlay from "@/app/_components/LoadingOverlay";
-import {Alert, Snackbar} from "@mui/material";
+import {InitialSurveyResponse} from "@/app/_types/SurveyTypes";
 
-export default function InitialSurvey(props: { position: Position, surveyResponse: InitialSurveyResponse }) {
-    const [nps, setNps] = useState(props.surveyResponse?.nps ?? 0);
-    const [lps, setLps] = useState(props.surveyResponse?.lps ?? 0);
-
-    const [loading, setLoading] = useState(false);
-    const [successSnackbar, setSuccessSnackbar] = useState(false);
-    const [errorSnackbar, setErrorSnackbar] = useState(false);
-
-    const submitSurvey = async () => {
-        setLoading(true);
-
-        const requestData: CreateSurveyResponseRequest = {
-            survey: {
-                type: SurveyType.INITIAL,
-                expaId: props.position.person.id,
-                positionId: props.position.id,
-            },
-            formValues: {
-                nps: nps,
-                lps: lps
-            }
-        }
-
-        await fetch('/api/survey', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        }).then(async (response) => {
-            if (response.status != 200) {
-                console.log(await response.json());
-                setErrorSnackbar(true);
-                return;
-            }
-            setSuccessSnackbar(true);
-        }).catch((error) => {
-            console.error(error);
-            setErrorSnackbar(true);
-        }).finally(() => {
-            setLoading(false);
-        });
-    }
+export default function InitialSurvey(props: {
+    surveyResponse: InitialSurveyResponse,
+    setSurveyResponse: Dispatch<SetStateAction<any>>
+    disabled: boolean
+}) {
 
     return (
         <>
-            <div className="bg-gray-100 inline-block p-10 m-5 rounded-lg relative space-y-8">
 
-                {loading && <LoadingOverlay/>}
-
-                <div className="text-3xl font-bold text-slate-700">Initial Survey</div>
-                <div className="mt-5 space-y-2">
-                    <div className="text-xl">How would you rate this experience?</div>
-                    <Rating name="customized-10" max={10} size="large" defaultValue={nps} disabled={loading}
-                            onChange={(event, newValue) => setNps(newValue || 0)}/>
-                </div>
-
-                <div className="mt-5 space-y-2">
-                    <div className="text-xl">Did it develop your leadership skills?</div>
-                    <Rating name="customized-10" max={10} size="large" defaultValue={lps} disabled={loading}
-                            onChange={(event, newValue) => {
-                                event.preventDefault();
-                                setLps(newValue || 0)
-                            }}
-                    />
-                </div>
-
-                <div className="mt-5">
-                    <AButton onClick={submitSurvey}></AButton>
-                </div>
-
+            <div className="mt-5 space-y-2">
+                <div className="text-md md:text-xl">How would you rate this experience?</div>
+                <Rating name="customized-10" max={10} size="large" defaultValue={props.surveyResponse?.nps ?? 0}
+                        disabled={props.disabled}
+                        onChange={(event, newValue) => {
+                            props.setSurveyResponse((prevState: InitialSurveyResponse) => ({
+                                ...prevState,
+                                nps: newValue || 0
+                            }));
+                        }}
+                />
             </div>
 
-            <Snackbar
-                open={successSnackbar}
-                autoHideDuration={6000}
-                onClose={() => setSuccessSnackbar(false)}
-                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
-            >
-                <Alert severity="success" sx={{width: '100%'}}>
-                    Survey updated.
-                </Alert>
-            </Snackbar>
+            <div className="mt-5 space-y-2">
+                <div className="text-md md:text-xl">Did it develop your leadership skills?</div>
+                <Rating name="customized-10" max={10} size="large" defaultValue={props.surveyResponse?.lps ?? 0}
+                        disabled={props.disabled}
+                        onChange={(event, newValue) => {
+                            props.setSurveyResponse((prevState: InitialSurveyResponse) => ({
+                                ...prevState,
+                                lps: newValue || 0
+                            }));
+                        }}
+                />
+            </div>
 
-            <Snackbar
-                open={errorSnackbar}
-                autoHideDuration={6000}
-                onClose={() => setErrorSnackbar(false)}
-                anchorOrigin={{vertical: "bottom", horizontal: "center"}}
-            >
-                <Alert severity="error" sx={{width: '100%'}}>
-                    Survey update failed.
-                </Alert>
-            </Snackbar>
         </>
     )
 }

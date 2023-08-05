@@ -9,12 +9,12 @@ type MiniInfoCardProps = {
     link?: string;
 };
 
-const titleStyleClass = "text-lg text-slate-500 font-bold"
-const valueStyleClass = "text-sm flex flex-row items-center space-x-2 text-xl"
+const titleStyleClass = "text-sm md:text-lg text-slate-500 font-bold"
+const valueStyleClass = "flex flex-row items-center space-x-2 text-md md:text-xl"
 
 export default function MiniInfoCard(props: MiniInfoCardProps) {
     return (
-        <div className="space-y-1">
+        <div className="md:space-y-1">
             <div className={titleStyleClass}>{props.title}</div>
 
             {props.link ? (

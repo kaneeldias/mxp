@@ -16,11 +16,13 @@ export default function SurveyData({position, type}: { position: Position, type:
 }
 
 export function getSurveyBreadcrumbs(position: Position, type: string): Breadcrumb[] {
+    let typeCapitalized = type.charAt(0).toUpperCase() + type.slice(1);
+
     let breadcrumbs = getPositionBreadcrumbs(position);
     breadcrumbs.push(
         {
-            label: type,
-            href: `/members/${position.person.id}/position/${position.id}/survey/initial`
+            label: `${typeCapitalized} Survey`,
+            href: `/members/${position.person.id}/position/${position.id}/survey/${type}`
         }
     );
     return breadcrumbs;

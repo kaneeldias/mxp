@@ -3,7 +3,8 @@ import React from "react";
 import {InitialSurveyResponse, SurveyType} from "@/app/_types/SurveyTypes";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import SurveyData from "@/app/members/[expaId]/position/[positionId]/survey/SurveyData";
-import InitialSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/InitialSurvey";
+import Survey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/Survey";
+import {getAccessToken} from "@/utils/auth_utils";
 
 export let metadata = {
     title: 'AIESEC Member'
@@ -12,7 +13,12 @@ const getPositionInfo = async (positionId: string): Promise<PositionInfoResponse
     const url = new URL("http://127.0.0.1:3000/api/position");
     url.searchParams.set("positionId", positionId);
 
-    const response: Response = await fetch(url.toString(), {cache: "force-cache"});
+    const response: Response = await fetch(url.toString(), {
+        cache: "no-cache",
+        headers: {
+            'Authorization': await getAccessToken()
+        }
+    });
 
     if (response.status != 200) {
         console.log(await response.json());
@@ -28,7 +34,12 @@ const getSurveyResponse = async (expaId: string, positionId: string, type: Surve
     url.searchParams.set("positionId", positionId);
     url.searchParams.set("type", type);
 
-    const response: Response = await fetch(url.toString(), {cache: "no-cache"});
+    const response: Response = await fetch(url.toString(), {
+        cache: "no-cache",
+        headers: {
+            'Authorization': await getAccessToken()
+        }
+    });
 
     if (response.status != 200) {
         console.log(await response.json());
@@ -64,13 +75,18 @@ export default async function InitialSurveyPage({params}: {
         <>
             <SurveyData position={position!} type={params.type}/>
 
-            <div className="p-10 inline-flex flex-row space-x-10">
-                <div>
+            <div className="md:p-10 inline-flex flex-col md:flex-row md:space-x-10">
+
+                <div className="block md:hidden">
                     <PositionInfoBox position={position!}/>
                 </div>
 
-                {params.type === SurveyType.INITIAL &&
-                    <InitialSurvey position={position!} surveyResponse={surveyResponse!}/>}
+                <Survey position={position!} surveyResponse={surveyResponse!} type={params.type}/>
+
+                <div className="hidden md:block">
+                    <PositionInfoBox position={position!}/>
+                </div>
+
 
             </div>
 

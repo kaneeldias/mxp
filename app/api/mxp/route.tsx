@@ -3,6 +3,7 @@ import {ApolloClient, ApolloError, InMemoryCache} from 'apollo-boost';
 import {createHttpLink} from 'apollo-link-http';
 import gql from 'graphql-tag';
 import {setContext} from 'apollo-link-context';
+import {getAccessToken} from "@/utils/auth_utils";
 
 export async function GET(request: NextRequest) {
     const searchValue: string = request.nextUrl.searchParams.get("search") || "";
@@ -10,11 +11,11 @@ export async function GET(request: NextRequest) {
 
     const httpLink = createHttpLink({uri: 'https://gis-api.aiesec.org/graphql'});
 
-    const authLink = setContext((_, {headers}) => {
+    const authLink = setContext(async (_, {headers}) => {
         return {
             headers: {
                 ...headers,
-                Authorization: "da6d83c0525ff289dbb8b4bf11795ac83d4dd193f35e0611ffaeee4ff2c56075"
+                Authorization: await getAccessToken()
             }
         }
     });
@@ -65,7 +66,7 @@ export async function GET(request: NextRequest) {
     }
 	`;
 
-    const response = await client.query({query: query})
+    const expaResponse = await client.query({query: query})
         .then((data: any) => {
             return data.data.people;
         })
@@ -73,11 +74,11 @@ export async function GET(request: NextRequest) {
             return error
         });
 
-    if (response instanceof ApolloError) {
+    if (expaResponse instanceof ApolloError) {
         return NextResponse.json({
-            "message": response,
+            "message": expaResponse,
         }, {status: 500});
     }
 
-    return NextResponse.json(response, {status: 200});
+    return NextResponse.json(expaResponse, {status: 200});
 }

@@ -65,8 +65,10 @@ const getMembers = async (
 ): Promise<MemberResponse> => {
     // return [];
 
-    const url = new URL(`${process.env.BASE_URL}/api/mxp`);
+    console.log(process.env.NEXT_PUBLIC_BASE_URL);
+    const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/mxp`);
     url.searchParams.set("page", page.toString());
+    console.log(url.toString());
     if (searchValue && searchValue !== "") {
         url.searchParams.set("search", searchValue);
     }

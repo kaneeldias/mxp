@@ -7,7 +7,7 @@ type StatusIndicatorProps = {
     type: string;
 };
 
-const styleClass = "inline-block text-lg rounded-md text-white font-normal p-1 px-2 w-48 flex items-center justify-center hover:opacity-80 transition-opacity duration-300";
+const styleClass = "flex inline-block text-sm md:text-lg rounded-md text-white font-normal p-1 px-2 w-24 h-16 md:w-48 flex items-center justify-center hover:opacity-80 transition-opacity duration-300";
 const buttonColours = {
     [SurveyStatus.FILLED]: "bg-green-600",
     [SurveyStatus.NOT_AVAILABLE]: "bg-slate-600",

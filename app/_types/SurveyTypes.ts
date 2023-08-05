@@ -44,3 +44,13 @@ export interface InitialSurveyResponse {
     nps: number,
     lps: number
 }
+
+export interface MidSurveyResponse {
+    why: string,
+    lps: number
+}
+
+export interface FinalSurveyResponse {
+    experience: string,
+    lps: number
+}

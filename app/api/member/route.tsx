@@ -8,11 +8,12 @@ export async function GET(request: NextRequest) {
     const expaId: string = request.nextUrl.searchParams.get("expaId") as string;
 
     const httpLink = createHttpLink({uri: 'https://gis-api.aiesec.org/graphql'});
+    
     const authLink = setContext((_, {headers}) => {
         return {
             headers: {
                 ...headers,
-                Authorization: "da6d83c0525ff289dbb8b4bf11795ac83d4dd193f35e0611ffaeee4ff2c56075"
+                Authorization: request.headers.get("Authorization")
             }
         }
     });

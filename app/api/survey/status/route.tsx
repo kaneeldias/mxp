@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     let position: Position;
     try {
-        position = await getPosition(positionId);
+        position = await getPosition(positionId, request.headers.get("Authorization") as string);
     } catch (error) {
         return NextResponse.json({
             "message": "Unable to retrieve position.",
