@@ -10,15 +10,12 @@ import FinalSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[ty
 import MidSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/MidSurvey";
 import SuccessDialog from "@/app/_components/Dialogs/SuccessDialog";
 import ErrorDialog from "@/app/_components/Dialogs/ErrorDialog";
-import {useRouter} from "next/navigation";
 
 export default function Survey(props: { type: SurveyType, position: Position, surveyResponse: any }) {
     const [loading, setLoading] = useState(false);
 
     const [successDialog, setSuccessDialog] = useState(false);
     const [errorDialog, setErrorDialog] = useState(false);
-
-    const router = useRouter();
 
     const handleSuccessDialogClose = () => {
         setSuccessDialog(false);

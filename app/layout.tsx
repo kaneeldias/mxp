@@ -3,7 +3,7 @@ import './globals.css'
 import LeftNav from "@/app/_components/LeftNav";
 import React from "react";
 import {AppProvider} from "@/app/_context/AppContext";
-import BreadcrumbsBar from "@/app/_components/BreadcrumbsBar";
+import HeaderBar from "@/app/_components/HeaderBar";
 
 export const metadata = {
     title: 'AIESEC Member'
@@ -26,7 +26,7 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
 
         <AppProvider>
             <div className="flex flex-col h-screen md:ml-[74px]">
-                <BreadcrumbsBar/>
+                <HeaderBar/>
 
                 <div className="w-full">
                     {children}

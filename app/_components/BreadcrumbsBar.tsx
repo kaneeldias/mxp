@@ -61,7 +61,7 @@ export default function BreadcrumbsBar() {
 
     return (
         <>
-            <div className="p-5 border-b-2 hidden md:block">
+            <div className="hidden md:block">
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="large"/>}
                     aria-label="breadcrumb"
@@ -71,7 +71,7 @@ export default function BreadcrumbsBar() {
                 </Breadcrumbs>
             </div>
 
-            <div className="p-2 border-b-2 block md:hidden">
+            <div className="block md:hidden">
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small"/>}
                     aria-label="breadcrumb"

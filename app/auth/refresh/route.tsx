@@ -31,10 +31,9 @@ export async function GET(request: NextRequest) {
     const authResponse = await getAccessToken(refreshToken);
     console.log(authResponse);
 
-    const response = NextResponse.json({
+    return NextResponse.json({
         access_token: authResponse.access_token,
         refresh_token: authResponse.refresh_token,
         expires_in: authResponse.expires_in,
     });
-    return response;
 }
