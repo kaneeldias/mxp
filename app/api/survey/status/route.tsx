@@ -4,6 +4,7 @@ import {firestore} from "firebase-admin";
 import {getPosition} from "@/app/api/position/route";
 import {Position} from "@/app/_types/MemberTypes";
 import {SurveyStatus, SurveyStatuses} from "@/app/_types/SurveyTypes";
+import {getToday} from "@/_utils/utils";
 import QueryDocumentSnapshot = firestore.QueryDocumentSnapshot;
 
 export async function GET(request: NextRequest) {
@@ -53,11 +54,3 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(statuses, {status: 200});
 }
 
-const getToday = (): string => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-    const day = String(today.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-};

@@ -5,7 +5,8 @@ import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import SurveyData from "@/app/members/[expaId]/position/[positionId]/survey/SurveyData";
 import Survey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/Survey";
 import {getAccessToken} from "@/_utils/auth_utils";
-import {checkAPIResponseForErrors} from "@/_utils/utils";
+import {canSurveyBeFilled, checkAPIResponseForErrors} from "@/_utils/utils";
+import {getCurrentPerson} from "@/app/_components/ProfileBox";
 
 export let metadata = {
     title: 'AIESEC Member'
@@ -54,12 +55,15 @@ export default async function InitialSurveyPage({params}: {
         throw new Error("Invalid survey type.");
     }
 
-
     const position: Position = (await getPositionInfo(params.positionId)).data;
 
     metadata.title = `${position.title} | ${position.person.full_name} | AIESEC Member`;
 
     const surveyResponse = await getSurveyResponse(params.expaId, params.positionId, params.type);
+
+    const profile = await getCurrentPerson();
+    const canBeFilled = canSurveyBeFilled(params.type, position.start_date, position.end_date);
+    const disabled = (profile.id != position.person.id) || !canBeFilled;
 
     return (
         <>
@@ -71,7 +75,7 @@ export default async function InitialSurveyPage({params}: {
                     <PositionInfoBox position={position}/>
                 </div>
 
-                <Survey position={position} surveyResponse={surveyResponse} type={params.type}/>
+                <Survey position={position} surveyResponse={surveyResponse} type={params.type} disabled={disabled}/>
 
                 <div className="hidden md:block">
                     <PositionInfoBox position={position}/>

@@ -10,12 +10,19 @@ import FinalSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[ty
 import MidSurvey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/MidSurvey";
 import SuccessDialog from "@/app/_components/Dialogs/SuccessDialog";
 import ErrorDialog from "@/app/_components/Dialogs/ErrorDialog";
+import {checkAPIResponseForErrors} from "@/_utils/utils";
 
-export default function Survey(props: { type: SurveyType, position: Position, surveyResponse: any }) {
+export default function Survey(props: {
+    type: SurveyType,
+    position: Position,
+    surveyResponse: any,
+    disabled: boolean
+}) {
     const [loading, setLoading] = useState(false);
 
     const [successDialog, setSuccessDialog] = useState(false);
     const [errorDialog, setErrorDialog] = useState(false);
+    const [errorDialogMessage, setErrorDialogMessage] = useState("Unable to submit your survey response. :(");
 
     const handleSuccessDialogClose = () => {
         setSuccessDialog(false);
@@ -25,7 +32,6 @@ export default function Survey(props: { type: SurveyType, position: Position, su
     const handleErrorDialogClose = () => {
         setErrorDialog(false);
     }
-
 
     const [surveyResponse, setSurveyResponse] = useState(props.surveyResponse ?? {})
 
@@ -41,28 +47,23 @@ export default function Survey(props: { type: SurveyType, position: Position, su
             formValues: surveyResponse
         }
 
-        // wait 5 seconds
-        await new Promise(r => setTimeout(r, 2000));
-
-        await fetch('/api/survey', {
+        const response = await fetch('/api/survey', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestData)
-        }).then(async (response) => {
-            if (response.status != 200) {
-                console.log(await response.json());
-                setErrorDialog(true);
-                return;
-            }
-            setSuccessDialog(true);
-        }).catch((error) => {
-            console.error(error);
-            setErrorDialog(true);
-        }).finally(() => {
-            setLoading(false);
         });
+
+        try {
+            await checkAPIResponseForErrors(response);
+            setSuccessDialog(true);
+        } catch (e: any) {
+            setErrorDialogMessage(e.message);
+            setErrorDialog(true);
+        } finally {
+            setLoading(false);
+        }
     }
 
 
@@ -83,27 +84,29 @@ export default function Survey(props: { type: SurveyType, position: Position, su
 
                 {props.type == SurveyType.INITIAL &&
                     <InitialSurvey surveyResponse={surveyResponse} setSurveyResponse={setSurveyResponse}
-                                   disabled={loading}/>}
+                                   disabled={loading || props.disabled}/>}
 
                 {props.type == SurveyType.MID &&
                     <MidSurvey surveyResponse={surveyResponse} setSurveyResponse={setSurveyResponse}
-                               disabled={loading}/>}
+                               disabled={loading || props.disabled}/>}
 
 
                 {props.type == SurveyType.FINAL &&
                     <FinalSurvey surveyResponse={surveyResponse} setSurveyResponse={setSurveyResponse}
-                                 disabled={loading}/>}
+                                 disabled={loading || props.disabled}/>}
 
 
-                <div className="mt-5">
-                    <AButton onClick={submitSurvey}></AButton>
-                </div>
+                {!props.disabled &&
+                    <div className="mt-5">
+                        <AButton onClick={submitSurvey}></AButton>
+                    </div>
+                }
 
             </div>
 
             <SuccessDialog content="Your survey response has been recorded." open={successDialog}
                            handleClose={handleSuccessDialogClose}/>
-            <ErrorDialog content="There was an error in recording your response." open={errorDialog}
+            <ErrorDialog content={errorDialogMessage} open={errorDialog}
                          handleClose={handleErrorDialogClose}/>
 
         </>

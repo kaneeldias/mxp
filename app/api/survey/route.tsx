@@ -2,11 +2,29 @@ import {NextRequest, NextResponse} from "next/server";
 import {db} from "@/app/init";
 import {firestore} from "firebase-admin";
 import {CreateSurveyResponseRequest} from "@/app/_types/SurveyTypes";
+import {getPosition} from "@/app/api/position/route";
+import {getAccessToken} from "@/_utils/auth_utils";
+import {getCurrentPerson} from "@/app/api/member/current/route";
+import {canSurveyBeFilled} from "@/_utils/utils";
 import FieldValue = firestore.FieldValue;
 
 export async function POST(request: NextRequest) {
     try {
         const requestData: CreateSurveyResponseRequest = await request.json() as CreateSurveyResponseRequest;
+        const position = await getPosition(requestData.survey.positionId, await getAccessToken());
+        const currentPerson = await getCurrentPerson(await getAccessToken())
+
+        console.log(position.person.id);
+        console.log(currentPerson.id);
+
+        if (position.person.id != currentPerson.id) {
+            return NextResponse.json({message: "You are not authorized to fill this survey."}, {status: 401});
+        }
+
+        const canBeFilled = canSurveyBeFilled(requestData.survey.type, position.start_date, position.end_date);
+        if (!canBeFilled) {
+            return NextResponse.json({message: "Survey cannot be filled at this time."}, {status: 400});
+        }
 
         const docRef = db
             .collection("members").doc(`${requestData.survey.expaId}`)
@@ -22,6 +40,9 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({message: "Survey response updated successfully"}, {status: 200});
     } catch (e) {
         console.log(e);
+        if (e instanceof Error) {
+            return NextResponse.json({message: e.message}, {status: 500});
+        }
         return NextResponse.json({message: "Unable to update survey response."}, {status: 500});
     }
 }

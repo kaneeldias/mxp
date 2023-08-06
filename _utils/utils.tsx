@@ -1,4 +1,5 @@
 import {Member, Position} from "@/app/_types/MemberTypes";
+import {SurveyType} from "@/app/_types/SurveyTypes";
 
 export function convertDateToReadable(date: string): string {
     const date2 = new Date(date);
@@ -62,4 +63,57 @@ export async function checkAPIResponseForErrors(response: Response): Promise<voi
 
         throw new Error(response.statusText);
     }
+}
+
+export function canSurveyBeFilled(type: string, startDate: string, endDate: string): boolean {
+    const today = getToday();
+    console.debug(`Today: ${today}`);
+    console.debug(`Start Date: ${startDate}`);
+    console.debug(`End Date: ${endDate}`);
+    console.debug(`Type: ${type}`);
+
+    // Survey needs to be filled within 2 weeks of the start date (can be before or after)
+    if (type === SurveyType.INITIAL) {
+        return getNumberOfDaysBetweenDates(today, startDate) <= 14;
+    }
+
+    // Survey needs to filled one month after the start date or one month before the end date
+    if (type === SurveyType.MID) {
+        if (today < startDate) return false;
+        if (today > endDate) return false;
+        if (getNumberOfDaysBetweenDates(today, startDate) < 30) return false;
+        if (getNumberOfDaysBetweenDates(today, endDate) < 30) return false;
+        return true;
+    }
+
+    // Survey needs to be filled within 2 weeks after the end date
+    if (type === SurveyType.FINAL) {
+        if (today < endDate) return false;
+        if (getNumberOfDaysBetweenDates(today, endDate) > 14) return false;
+        return true;
+    }
+
+    return false;
+}
+
+function getNumberOfDaysBetweenDates(date1: string, date2: string): number {
+    const date1Obj = new Date(date1);
+    const date2Obj = new Date(date2);
+
+    // Calculate the difference in milliseconds between the two dates
+    const timeDiff = Math.abs(date2Obj.getTime() - date1Obj.getTime());
+
+    // Calculate the number of days between the two dates
+    const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+
+    return daysDiff;
+}
+
+export function getToday(): string {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
 }
