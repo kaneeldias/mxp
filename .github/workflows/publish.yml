@@ -25,6 +25,9 @@ jobs:
           FIREBASE_PRIVATE_KEY: ${{secrets.FIREBASE_PRIVATE_KEY}}
           FIREBASE_PROJECT_ID: ${{secrets.FIREBASE_PROJECT_ID}}
 
+      - name: "Delete node_modules directory"
+        run: rm -rf node_modules
+
       - name: "Push to server"
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
