@@ -2,6 +2,8 @@ import {NextRequest, NextResponse} from "next/server";
 import {getTokensIfNecessary} from "@/_utils/auth_utils";
 
 export async function middleware(request: NextRequest) {
+    console.debug("Running middleware at", request.nextUrl.pathname);
+
     let tokens;
     try {
         tokens = await getTokensIfNecessary(request);
@@ -56,5 +58,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/:path*"]
+    matcher: ["/", "/members/:path*"]
 }
