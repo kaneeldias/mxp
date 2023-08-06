@@ -1,9 +1,9 @@
 import React from 'react';
 import {Member} from "@/app/_types/MemberTypes";
-import Image from "next/image";
 import {headers} from "next/headers";
 import Link from "next/link";
 import {checkLoggedIn} from "@/_utils/auth_utils";
+import {Avatar} from "@/_lib/tailwind-material";
 
 export async function getCurrentPerson(): Promise<Member> {
     const url = new URL(`${process.env.BASE_URL}/api/member/current`);
@@ -34,13 +34,10 @@ export default async function ProfileBox() {
                 <>
                     <div className="w-5 h-5 md:w-10 md:h-10 relative">
                         <Link href={`/members/${profile.id}`}>
-                            <Image
-                                src={profile.profile_photo}
-                                fill
-                                objectFit="cover"
-                                alt="Profile photo"
-                                className="rounded-full"
-                                priority
+                            <Avatar src={profile.profile_photo!}
+                                    alt={`Profile photo for ${profile.full_name}`}
+                                    size="md"
+                                    variant="rounded"
                             />
                         </Link>
                     </div>
