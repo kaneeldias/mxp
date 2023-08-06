@@ -1,6 +1,6 @@
 import React from 'react';
 import {redirect} from "next/navigation";
-import {checkLoggedIn} from "@/utils/auth_utils";
+import {checkLoggedIn} from "@/_utils/auth_utils";
 
 export default async function AuthComponent() {
     if (!checkLoggedIn()) {

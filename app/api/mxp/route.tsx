@@ -3,7 +3,7 @@ import {ApolloClient, ApolloError, InMemoryCache} from 'apollo-boost';
 import {createHttpLink} from 'apollo-link-http';
 import gql from 'graphql-tag';
 import {setContext} from 'apollo-link-context';
-import {getAccessToken} from "@/utils/auth_utils";
+import {getAccessToken} from "@/_utils/auth_utils";
 
 export async function GET(request: NextRequest) {
     const searchValue: string = request.nextUrl.searchParams.get("search") || "";

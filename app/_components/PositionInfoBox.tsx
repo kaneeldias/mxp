@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from "next/image";
-import {convertTerm} from "@/utils/utils";
+import {convertTerm} from "@/_utils/utils";
 import {Position} from "@/app/_types/MemberTypes";
 import Link from "next/link";
 import PositionStatusIndicator from "@/app/_components/PositionStatusIndicator";

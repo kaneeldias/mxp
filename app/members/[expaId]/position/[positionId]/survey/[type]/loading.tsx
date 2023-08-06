@@ -1,5 +1,5 @@
-import Loading from "@/app/loading";
+import LoadingIndicator from "@/app/LoadingIndicator";
 
 export default function LoadingX() {
-    return (<Loading/>)
+    return (<LoadingIndicator/>)
 }

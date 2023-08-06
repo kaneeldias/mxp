@@ -1,20 +1,20 @@
 export type Member = {
-    id: string;
-    full_name: string;
+    id: string,
+    full_name: string,
     home_lc?: {
         full_name: string;
-    };
+    },
     home_mc?: {
         full_name: string;
-    };
-    is_aiesecer?: boolean;
+    },
+    is_aiesecer?: boolean,
     contact_detail?: {
         email: string;
         country_code: string;
         phone: string
-    }
-    profile_photo?: string;
-    member_positions?: Position[];
+    },
+    profile_photo?: string,
+    member_positions?: Position[],
 }
 
 export type MemberPaging = {

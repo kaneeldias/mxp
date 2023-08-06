@@ -3,9 +3,9 @@ import {Member} from "@/app/_types/MemberTypes";
 import Image from "next/image";
 import {headers} from "next/headers";
 import Link from "next/link";
-import {checkLoggedIn} from "@/utils/auth_utils";
+import {checkLoggedIn} from "@/_utils/auth_utils";
 
-const getCurrentPerson = async (): Promise<Member> => {
+export async function getCurrentPerson(): Promise<Member> {
     const url = new URL(`${process.env.BASE_URL}/api/member/current`);
 
     const response: Response = await fetch(url.toString(), {
@@ -20,7 +20,7 @@ const getCurrentPerson = async (): Promise<Member> => {
     }
 
     return await response.json();
-};
+}
 
 export default async function ProfileBox() {
     let profile: Member = {} as Member
@@ -31,18 +31,20 @@ export default async function ProfileBox() {
     return (
         <div className="flex flex-row justify-center items-stretch mr-2">
             {profile && profile.profile_photo &&
-                <div className="w-5 h-5 md:w-10 md:h-10 relative">
-                    <Link href={`/members/${profile.id}`}>
-                        <Image
-                            src={profile.profile_photo}
-                            fill
-                            objectFit="cover"
-                            alt="Profile photo"
-                            className="rounded-full"
-                            priority
-                        />
-                    </Link>
-                </div>
+                <>
+                    <div className="w-5 h-5 md:w-10 md:h-10 relative">
+                        <Link href={`/members/${profile.id}`}>
+                            <Image
+                                src={profile.profile_photo}
+                                fill
+                                objectFit="cover"
+                                alt="Profile photo"
+                                className="rounded-full"
+                                priority
+                            />
+                        </Link>
+                    </div>
+                </>
             }
         </div>
     );
