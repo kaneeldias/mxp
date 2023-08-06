@@ -1,7 +1,7 @@
 "use client"
 
 import React, {Dispatch, SetStateAction} from "react";
-import {Rating} from "@/lib/mui";
+import {Rating} from "@/_lib/mui";
 import {FinalSurveyResponse} from "@/app/_types/SurveyTypes";
 import {TextField} from "@mui/material";
 

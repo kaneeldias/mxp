@@ -1,9 +1,7 @@
 import Head from "next/head"
 import './globals.css'
-import LeftNav from "@/app/_components/LeftNav";
 import React from "react";
 import {AppProvider} from "@/app/_context/AppContext";
-import HeaderBar from "@/app/_components/HeaderBar";
 
 export const metadata = {
     title: 'AIESEC Member'
@@ -20,18 +18,8 @@ export default function RootLayout({children,}: { children: React.ReactNode }) {
         </Head>
         <body className="flex flex-col h-screen">
 
-        <div className="flex-none min-h-screen fixed hidden md:block">
-            <LeftNav/>
-        </div>
-
         <AppProvider>
-            <div className="flex flex-col h-screen md:ml-[74px]">
-                <HeaderBar/>
-
-                <div className="w-full">
-                    {children}
-                </div>
-            </div>
+            {children}
         </AppProvider>
 
         </body>

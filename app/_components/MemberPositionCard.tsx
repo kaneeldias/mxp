@@ -3,7 +3,7 @@
 import React from 'react';
 import PositionStatusIndicator from "@/app/_components/PositionStatusIndicator";
 import {Position} from "@/app/_types/MemberTypes";
-import {convertDateToReadable, convertTerm} from "@/utils/utils";
+import {convertDateToReadable, convertTerm} from "@/_utils/utils";
 
 type MemberPositionCardProps = {
     position: Position;

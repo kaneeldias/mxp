@@ -1,32 +1,40 @@
-"use client"
-
 import Image from 'next/image'
-import {useEffect, useState} from "react"
+import AButton from "@/app/_components/AButton";
+import {FaceIcon, LoginIcon, PeopleIcon} from "@/_lib/icons-material";
+import Link from "next/link";
+import {checkLoggedIn} from "@/_utils/auth_utils";
+import {Member} from "@/app/_types/MemberTypes";
+import {getCurrentPerson} from "@/app/_components/ProfileBox";
 
-export default function Home() {
+export default async function Home() {
 
-    const finalWelcomeMessage = "for our innovations to succeed, we need to ensure that our platforms support it lol"
-    const [welcomeMessage, setWelcomeMessage] = useState('');
+    // const finalWelcomeMessage = "for our innovations to succeed, we need to ensure that our platforms support it lol"
+    // const [welcomeMessage, setWelcomeMessage] = useState('');
 
-    let i: number = 0;
-    useEffect(() => {
-        const intervalId = setInterval(() => {
-            i++;
-            setWelcomeMessage((prev) => prev + finalWelcomeMessage[i - 1]);
-            if (i >= finalWelcomeMessage.length) {
-                clearInterval(intervalId)
-            }
-        }, 75)
+    // let i: number = 0;
+    // useEffect(() => {
+    //     const intervalId = setInterval(() => {
+    //         i++;
+    //         setWelcomeMessage((prev) => prev + finalWelcomeMessage[i - 1]);
+    //         if (i >= finalWelcomeMessage.length) {
+    //             clearInterval(intervalId)
+    //         }
+    //     }, 75)
+    //
+    //     return () => clearInterval(intervalId);
+    // }, []);
 
-        return () => clearInterval(intervalId);
-    }, []);
+    let profile: Member = {} as Member
+    if (checkLoggedIn()) {
+        profile = await getCurrentPerson();
+    }
 
     return (
-        <div className="flex flex-col w-screen h-screen justify-center items-center space-y-10 bg-aiesec-blue">
+        <div className="flex flex-col w-screen h-screen justify-center items-center space-y-20 bg-aiesec-blue p-20">
 
-            <div className="text-white italic font-lato font-light text-xl">
-                {welcomeMessage}
-            </div>
+            {/*<div className="text-white italic font-lato font-light text-xl">*/}
+            {/*    {welcomeMessage}*/}
+            {/*</div>*/}
 
             <Image
                 src="/aiesec_member_logo_long_white.png"
@@ -34,6 +42,41 @@ export default function Home() {
                 height={500}
                 alt="AIESEC Member Logo"
             />
+
+            <div className="space-x-10">
+
+                {checkLoggedIn() ? (
+                    <>
+                        <Link href="/members">
+                            <AButton variant="white">
+                                <div className="space-x-2 items-center justify-center">
+                                    <PeopleIcon/>
+                                    <span>Members</span>
+                                </div>
+                            </AButton>
+                        </Link>
+
+                        <Link href={`/members/${profile.id}`}>
+                            <AButton variant="white">
+                                <div className="space-x-2 items-center justify-center">
+                                    <FaceIcon/>
+                                    <span>My Profile</span>
+                                </div>
+                            </AButton>
+                        </Link>
+                    </>
+                ) : (
+                    <Link href="/auth/login">
+                        <AButton variant="white">
+                            <div className="space-x-2 items-center justify-center">
+                                <LoginIcon/>
+                                <span>Login</span>
+                            </div>
+                        </AButton>
+                    </Link>
+                )}
+
+            </div>
         </div>
     )
 }

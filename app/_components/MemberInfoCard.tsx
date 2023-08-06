@@ -3,7 +3,7 @@
 import React from 'react';
 import {Member} from "@/app/_types/MemberTypes";
 import Image from "next/image";
-import {getLCAndMC} from "@/utils/utils";
+import {getLCAndMC} from "@/_utils/utils";
 
 type MemberInfoCardProps = {
     member: Member;

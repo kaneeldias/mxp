@@ -3,7 +3,7 @@ import {SurveyStatuses} from "@/app/_types/SurveyTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
 import SurveyStatusIndicator from "@/app/_components/SurveyStatusIndicator";
 import {Position} from "@/app/_types/MemberTypes";
-import {getAccessToken} from "@/utils/auth_utils";
+import {getAccessToken} from "@/_utils/auth_utils";
 
 interface SurveyStatusBoxProps {
     expaId: string,

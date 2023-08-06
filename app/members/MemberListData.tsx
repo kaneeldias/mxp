@@ -3,7 +3,7 @@
 import React, {useContext, useEffect} from "react";
 import {AppContext} from "@/app/_context/AppContext";
 import {Breadcrumb, getHomeBreadcrumbs} from "@/app/_components/BreadcrumbsBar";
-import {PeopleIcon} from "@/lib/icons-material";
+import {PeopleIcon} from "@/_lib/icons-material";
 
 export default function MemberListData() {
     const context = useContext(AppContext);

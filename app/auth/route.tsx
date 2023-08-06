@@ -31,7 +31,7 @@ export async function GET(request: NextRequest) {
     const code: string = request.nextUrl.searchParams.get("code") as string;
     const authResponse = await getAccessToken(code);
 
-    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/members`, {
+    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
         status: 302,
     });
 

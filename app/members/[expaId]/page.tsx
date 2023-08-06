@@ -2,7 +2,7 @@ import {Member, MemberInfoResponse, Position} from "@/app/_types/MemberTypes";
 import MemberPositionCard from "@/app/_components/MemberPositionCard";
 import MemberInfoCard from "@/app/_components/MemberInfoCard";
 import Link from 'next/link'
-import {checkAPIResponseForErrors, sortMemberPositions} from "@/utils/utils";
+import {checkAPIResponseForErrors, sortMemberPositions} from "@/_utils/utils";
 import React from "react";
 import MemberData from "@/app/members/[expaId]/MemberData";
 import {headers} from "next/headers";

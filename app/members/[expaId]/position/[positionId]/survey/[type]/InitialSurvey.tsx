@@ -1,7 +1,7 @@
 "use client"
 
 import React, {Dispatch, SetStateAction} from "react";
-import {Rating} from "@/lib/mui";
+import {Rating} from "@/_lib/mui";
 import {InitialSurveyResponse} from "@/app/_types/SurveyTypes";
 
 export default function InitialSurvey(props: {

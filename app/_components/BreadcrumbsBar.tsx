@@ -1,8 +1,8 @@
 "use client"
 
 import React, {useContext} from 'react';
-import {Breadcrumbs} from "../../lib/mui";
-import {HomeIcon, NavigateNextIcon} from "../../lib/icons-material";
+import {Breadcrumbs} from "@/_lib/mui";
+import {HomeIcon, NavigateNextIcon} from "@/_lib/icons-material";
 import Link from "next/link";
 import {AppContext} from "@/app/_context/AppContext";
 

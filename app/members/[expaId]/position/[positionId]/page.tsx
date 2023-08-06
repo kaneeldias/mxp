@@ -1,11 +1,11 @@
 import {Position, PositionInfoResponse} from "@/app/_types/MemberTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
-import {checkAPIResponseForErrors, convertDateToReadable} from "@/utils/utils";
+import {checkAPIResponseForErrors, convertDateToReadable} from "@/_utils/utils";
 import React from "react";
 import SurveyStatusBox from "@/app/members/[expaId]/position/[positionId]/SurveyStatusBox";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import PositionData from "@/app/members/[expaId]/position/[positionId]/PositionData";
-import {getAccessToken} from "@/utils/auth_utils";
+import {getAccessToken} from "@/_utils/auth_utils";
 
 export let metadata = {
     title: 'AIESEC Member'

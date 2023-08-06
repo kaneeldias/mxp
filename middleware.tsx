@@ -1,5 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
-import {getTokensIfNecessary} from "@/utils/auth_utils";
+import {getTokensIfNecessary} from "@/_utils/auth_utils";
 
 export async function middleware(request: NextRequest) {
     let tokens;
@@ -56,5 +56,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-    matcher: ["/members/:path*"]
+    matcher: ["/:path*"]
 }

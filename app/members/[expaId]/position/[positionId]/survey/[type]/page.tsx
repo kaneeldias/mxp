@@ -4,8 +4,8 @@ import {SurveyType} from "@/app/_types/SurveyTypes";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import SurveyData from "@/app/members/[expaId]/position/[positionId]/survey/SurveyData";
 import Survey from "@/app/members/[expaId]/position/[positionId]/survey/[type]/Survey";
-import {getAccessToken} from "@/utils/auth_utils";
-import {checkAPIResponseForErrors} from "@/utils/utils";
+import {getAccessToken} from "@/_utils/auth_utils";
+import {checkAPIResponseForErrors} from "@/_utils/utils";
 
 export let metadata = {
     title: 'AIESEC Member'
