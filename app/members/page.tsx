@@ -19,6 +19,7 @@ import React, {SyntheticEvent, useEffect, useState} from "react";
 import Search from "@mui/icons-material/Search";
 import Link from 'next/link'
 import MemberListData from "@/app/members/MemberListData";
+import MemberChip from "@/app/_components/MemberChip";
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     "& .MuiPaper-root": {
@@ -163,7 +164,7 @@ export default function Members() {
                     <StyledTable sx={{maxHeight: 100}} aria-label="simple table" stickyHeader>
                         <TableHead>
                             <TableRow>
-                                <StyledTableCell className="w-1/12">ID</StyledTableCell>
+                                <StyledTableCell className="w-1/12 hidden md:block">ID</StyledTableCell>
                                 <StyledTableCell className="w-1/3">Name</StyledTableCell>
                                 <StyledTableCell className="w-1/3">MC</StyledTableCell>
                                 <StyledTableCell className="w-1/3">LC</StyledTableCell>
@@ -196,13 +197,11 @@ export default function Members() {
                                         key={member.id}
                                         sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                     >
-                                        <StyledTableCell>
+                                        <StyledTableCell className="hidden md:block">
                                             <Link href={`/members/${member.id}`}>{member.id}</Link>
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            <Link href={`/members/${member.id}`}>
-                                                {member.full_name}
-                                            </Link>
+                                            <MemberChip member={member} truncateName={true}/>
                                         </StyledTableCell>
                                         <StyledTableCell>{member.home_mc!.full_name}</StyledTableCell>
                                         <StyledTableCell>{member.home_lc!.full_name}</StyledTableCell>

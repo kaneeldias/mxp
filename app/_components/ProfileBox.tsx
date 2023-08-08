@@ -36,8 +36,8 @@ export default async function ProfileBox() {
                         <Link href={`/members/${profile.id}`}>
                             <Avatar src={profile.profile_photo!}
                                     alt={`Profile photo for ${profile.full_name}`}
-                                    size="md"
                                     variant="rounded"
+                                    className="md:w-10 md:h-10 w-5 h-5 cursor-pointer"
                             />
                         </Link>
                     </div>

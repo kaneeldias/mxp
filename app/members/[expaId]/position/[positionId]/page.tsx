@@ -6,6 +6,7 @@ import SurveyStatusBox from "@/app/members/[expaId]/position/[positionId]/Survey
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import PositionData from "@/app/members/[expaId]/position/[positionId]/PositionData";
 import {getAccessToken} from "@/_utils/auth_utils";
+import MemberChip from "@/app/_components/MemberChip";
 
 export let metadata = {
     title: 'AIESEC Member'
@@ -54,9 +55,12 @@ export default async function PositionInfo({params}: { params: { expaId: string,
                                 <MiniInfoCard title="End date" value={convertDateToReadable(position.end_date)}/>}
                         </div>
 
-                        {position.reports_to && <MiniInfoCard title="Team leader" value={position.reports_to.full_name}
-                                                              image={position.reports_to.profile_photo}
-                                                              link={`/members/${position.reports_to.id}`}/>}
+                        {position.reports_to && <MiniInfoCard title="Team leader"
+                                                              value={(
+                                                                  <MemberChip member={position.reports_to}
+                                                                              truncateName={true}/>
+                                                              )}
+                        />}
                     </div>
 
                     <div>

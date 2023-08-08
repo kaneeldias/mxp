@@ -14,7 +14,6 @@ type StatusIndicatorProps = {
     type: string;
 };
 
-const styleClass = "flex inline-block text-[6px] md:text-xs rounded-full text-white p-0 w-16 md:w-32 h-5 md:h-8 items-center justify-center font-bold opacity-80 flex-shrink-0 pt-[2px]"
 const buttonColours = {
     [Status.ACTIVE]: "green",
     [Status.COMPLETED]: "blue",
@@ -28,6 +27,6 @@ export default function PositionStatusIndicator(props: StatusIndicatorProps) {
 
     return (
         <Chip variant="ghost" value={type} color={buttonColours[type].toString() as color}
-              className="rounded-full w-16 md:w-32 justify-center"/>
+              className="rounded-full w-24 justify-center whitespace-nowrap"/>
     );
 };
