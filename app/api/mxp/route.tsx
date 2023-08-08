@@ -40,6 +40,7 @@ export async function GET(request: NextRequest) {
 			data {
 			    id
 				full_name
+				profile_photo
 				home_lc {
 				    full_name
 				}
