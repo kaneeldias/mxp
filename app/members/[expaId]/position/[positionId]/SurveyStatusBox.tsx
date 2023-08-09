@@ -3,7 +3,8 @@ import {SurveyStatuses} from "@/app/_types/SurveyTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
 import SurveyStatusIndicator from "@/app/_components/SurveyStatusIndicator";
 import {Position} from "@/app/_types/MemberTypes";
-import {getAccessToken} from "@/_utils/auth_utils";
+import {headers} from "next/headers";
+import {getSurveyStatuses} from "@/app/api/survey/status/route";
 
 interface SurveyStatusBoxProps {
     expaId: string,
@@ -11,36 +12,9 @@ interface SurveyStatusBoxProps {
     position: Position
 }
 
-const getSurveyStatusInfo = async (expaId: string, positionId: string): Promise<SurveyStatuses> => {
-    const url = new URL(`${process.env.BASE_URL}/api/survey/status`);
-    url.searchParams.set("expaId", expaId);
-    url.searchParams.set("positionId", positionId);
-
-    const response: Response = await fetch(url.toString(), {
-        cache: "no-cache",
-        headers: {
-            'Authorization': await getAccessToken()
-        }
-    });
-
-    if (response.status != 200) {
-        console.log(await response.json());
-        throw new Error("Unable to fetch survey status information.");
-    }
-
-    return await response.json();
-}
-
-
 export default async function SurveyStatusBox(props: SurveyStatusBoxProps) {
     const position = props.position;
-    let surveyStatuses: SurveyStatuses | undefined;
-
-    try {
-        surveyStatuses = await getSurveyStatusInfo(props.expaId, props.positionId);
-    } catch (e) {
-        console.log(e);
-    }
+    let surveyStatuses: SurveyStatuses = await getSurveyStatuses(props.expaId, props.positionId, headers().get("Authorization")!);
 
     return (
         <div className="space-y-4 md:space-y-8 bg-gray-100 p-5 rounded-lg mr-5">

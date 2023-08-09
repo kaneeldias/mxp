@@ -1,33 +1,20 @@
-import {Position, PositionInfoResponse} from "@/app/_types/MemberTypes";
+import {Position} from "@/app/_types/MemberTypes";
 import MiniInfoCard from "@/app/_components/MiniInfoCard";
-import {checkAPIResponseForErrors, convertDateToReadable} from "@/_utils/utils";
+import {convertDateToReadable} from "@/_utils/utils";
 import React from "react";
 import SurveyStatusBox from "@/app/members/[expaId]/position/[positionId]/SurveyStatusBox";
 import PositionInfoBox from "@/app/_components/PositionInfoBox";
 import PositionData from "@/app/members/[expaId]/position/[positionId]/PositionData";
-import {getAccessToken} from "@/_utils/auth_utils";
 import MemberChip from "@/app/_components/MemberChip";
+import {getPosition} from "@/app/api/position/route";
+import {headers} from "next/headers";
 
 export let metadata = {
     title: 'AIESEC Member'
 }
-const getPositionInfo = async (positionId: string): Promise<PositionInfoResponse> => {
-    const url = new URL(`${process.env.BASE_URL}/api/position`);
-    url.searchParams.set("positionId", positionId);
-
-    const response: Response = await fetch(url.toString(), {
-        cache: "no-cache",
-        headers: {
-            'Authorization': await getAccessToken()
-        }
-    });
-
-    await checkAPIResponseForErrors(response);
-    return await response.json();
-};
 
 export default async function PositionInfo({params}: { params: { expaId: string, positionId: string } }) {
-    const position: Position = (await getPositionInfo(params.positionId)).data;
+    const position: Position = await getPosition(params.positionId, headers().get("Authorization")!);
     metadata.title = `${position.title} | ${position.person.full_name} | AIESEC Member`;
 
     return (
