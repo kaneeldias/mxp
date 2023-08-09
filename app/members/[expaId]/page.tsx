@@ -1,41 +1,22 @@
-import {Member, MemberInfoResponse, Position} from "@/app/_types/MemberTypes";
+import {Member, Position} from "@/app/_types/MemberTypes";
 import MemberPositionCard from "@/app/_components/MemberPositionCard";
 import MemberInfoCard from "@/app/_components/MemberInfoCard";
 import Link from 'next/link'
-import {checkAPIResponseForErrors, sortMemberPositions} from "@/_utils/utils";
+import {sortMemberPositions} from "@/_utils/utils";
 import React from "react";
 import MemberData from "@/app/members/[expaId]/MemberData";
 import {headers} from "next/headers";
+import {getMemberInfo} from "@/app/api/member/route";
 
 export let metadata = {
     title: 'AIESEC Member'
 }
-const getMemberInfo = async (expaId: string): Promise<MemberInfoResponse> => {
-    const url = new URL(`${process.env.BASE_URL}/api/member`);
-    url.searchParams.set("expaId", expaId);
-
-    const response: Response = await fetch(url.toString(), {
-        cache: "no-cache",
-        headers: {
-            "Authorization": headers().get("Authorization") ?? ""
-        }
-    });
-
-    await checkAPIResponseForErrors(response);
-
-    return await response.json();
-};
 
 export default async function MemberInfo({params}: { params: { expaId: string } }) {
-    // let memberInfo: Member;
+    const memberInfo: Member = await getMemberInfo(params.expaId, headers().get("Authorization")!)
 
-    // try {
-    const memberInfo: Member = (await getMemberInfo(params.expaId)).data;
     memberInfo.member_positions = sortMemberPositions(memberInfo.member_positions!);
     metadata.title = `${memberInfo.full_name} | AIESEC Member`;
-    // } catch (e) {
-    //     console.log(e);
-    // }
 
     return (
         <>

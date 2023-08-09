@@ -54,3 +54,45 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(statuses, {status: 200});
 }
 
+export async function getSurveyStatuses(expaId: string, positionId: string, accessToken: string): Promise<SurveyStatuses> {
+    let statuses: SurveyStatuses = {
+        initial: SurveyStatus.NOT_FILLED,
+        mid: SurveyStatus.NOT_FILLED,
+        final: SurveyStatus.NOT_FILLED,
+    }
+
+    let position: Position;
+    try {
+        position = await getPosition(positionId, accessToken);
+    } catch (error) {
+        throw new Error("Unable to retrieve position.");
+    }
+
+    const startDate = position.start_date;
+    const endDate = position.end_date;
+
+    const surveysRef = db
+        .collection("members").doc(`${expaId}`)
+        .collection("positions").doc(`${positionId}`)
+        .collection("surveys")
+    const snapshot = await surveysRef.get();
+
+    if (!snapshot.empty) {
+        snapshot.forEach((doc: QueryDocumentSnapshot) => {
+            statuses[doc.id as keyof SurveyStatuses] = SurveyStatus.FILLED;
+        });
+    }
+
+    const today: string = getToday();
+
+    if (statuses.mid === SurveyStatus.NOT_FILLED && (today < startDate)) {
+        statuses.mid = SurveyStatus.NOT_AVAILABLE;
+    }
+
+    if (statuses.final === SurveyStatus.NOT_FILLED && (today < endDate)) {
+        statuses.final = SurveyStatus.NOT_AVAILABLE;
+    }
+
+    return statuses;
+
+}

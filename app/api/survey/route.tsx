@@ -74,3 +74,25 @@ export async function GET(request: NextRequest) {
         return NextResponse.json({message: "Unable to retrieve survey response."}, {status: 500});
     }
 }
+
+export async function getSurveyResponse(expaId: string, positionId: string, type: string): Promise<any> {
+    try {
+        const docRef = db
+            .collection("members").doc(`${expaId}`)
+            .collection("positions").doc(`${positionId}`)
+            .collection("surveys").doc(`${type}`);
+
+        const doc = await docRef.get();
+
+        if (!doc.exists) {
+            return {};
+        }
+
+        return doc.data();
+    } catch (e) {
+        if (e instanceof Error) {
+            return e;
+        }
+        return new Error("Unable to retrieve survey response.");
+    }
+}

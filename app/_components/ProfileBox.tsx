@@ -4,28 +4,12 @@ import {headers} from "next/headers";
 import Link from "next/link";
 import {checkLoggedIn} from "@/_utils/auth_utils";
 import {Avatar} from "@/_lib/tailwind-material";
-
-export async function getCurrentPerson(): Promise<Member> {
-    const url = new URL(`${process.env.BASE_URL}/api/member/current`);
-
-    const response: Response = await fetch(url.toString(), {
-        headers: {
-            "Authorization": headers().get("Authorization") ?? ""
-        }
-    });
-
-    if (response.status != 200) {
-        console.log(await response.json());
-        throw new Error("Unable to fetch current person information.");
-    }
-
-    return await response.json();
-}
+import {getCurrentPerson} from "@/app/api/member/current/route";
 
 export default async function ProfileBox() {
     let profile: Member = {} as Member
     if (checkLoggedIn()) {
-        profile = await getCurrentPerson();
+        profile = await getCurrentPerson(headers().get("Authorization")!);
     }
 
     return (
