@@ -4,7 +4,8 @@ import {FaceIcon, LoginIcon, PeopleIcon} from "@/_lib/icons-material";
 import Link from "next/link";
 import {checkLoggedIn} from "@/_utils/auth_utils";
 import {Member} from "@/app/_types/MemberTypes";
-import {getCurrentPerson} from "@/app/_components/ProfileBox";
+import {getCurrentPerson} from "@/app/api/member/current/route";
+import {headers} from "next/headers";
 
 export default async function Home() {
 
@@ -26,7 +27,7 @@ export default async function Home() {
 
     let profile: Member = {} as Member
     if (checkLoggedIn()) {
-        profile = await getCurrentPerson();
+        profile = await getCurrentPerson(headers().get("Authorization")!);
     }
 
     return (
