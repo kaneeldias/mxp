@@ -24,17 +24,18 @@ export default async function Committee({params}: { params: { committeeId: strin
                 <div className="text-md md:text-xl text-gray-600">{committee.address_detail?.country}</div>
             </div>
 
-            <div className="flex flex-row">
+            <div className="flex flex-col md:flex-row">
 
                 <div className={"flex mt-10 md:w-1/3"}>
                     <PresidentBox president={eb.president}/>
                 </div>
 
-                <div className="flex mt-10 md:w-2/3">
+                <div className="flex flex-col md:flex-col mt-10 md:w-2/3">
+                    <div className="md:text-2xl md:ml-10 font-bold text-gray-600">Vice Presidents</div>
                     <div
-                        className="flex flex-col md:flex-row md:flex-wrap md:max-h-[15rem] md:overflow-x-hidden no-scrollbar resize">
+                        className="flex flex-row flex-wrap md:max-h-[15rem]">
                         {eb.vicePresidents.map((vp, index) => (
-                            <div key={index} className="flex w-1/5">
+                            <div key={index} className="flex w-1/2 md:w-1/5">
                                 <VicePresidentBox vicePresident={vp}/>
                             </div>
                         ))}
