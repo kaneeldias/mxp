@@ -13,13 +13,13 @@ import {
     TableRow,
     TextField
 } from "@mui/material";
-import {Member, MemberResponse, Paging} from "../_types/MemberTypes";
+import {Paging} from "../_types/MemberTypes";
 import styled from "@mui/material/styles/styled";
 import React, {SyntheticEvent, useEffect, useState} from "react";
 import Search from "@mui/icons-material/Search";
 import Link from 'next/link'
-import MemberListData from "@/app/members/MemberListData";
-import MemberChip from "@/app/_components/MemberChip";
+import {Committee, CommitteesResponse} from "@/app/_types/CommitteeTypes";
+import CommitteeListData from "@/app/committees/CommitteeListData";
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     "& .MuiPaper-root": {
@@ -59,28 +59,26 @@ const StyledTableRow = styled(TableRow)(() => ({
     }
 }));
 
-const getMembers = async (
+const getCommittees = async (
     searchValue: string,
     page: number,
     signal: AbortSignal
-): Promise<MemberResponse> => {
-    // return [];
+): Promise<CommitteesResponse> => {
 
     console.log(process.env.NEXT_PUBLIC_BASE_URL);
-    const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/mxp`);
+    const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/committee`);
     url.searchParams.set("page", page.toString());
     console.log(url.toString());
     if (searchValue && searchValue !== "") {
         url.searchParams.set("search", searchValue);
     }
 
-    // const query = await fetch(url, {signal, cache: "force-cache"});
     const query = await fetch(url.toString(), {signal});
     return await query.json();
 };
 
 export default function Members() {
-    const [members, setMembers] = useState<Member[]>([]);
+    const [committees, setCommittees] = useState<Committee[]>([]);
     const [pagingInfo, setPagingInfo] = useState<Paging>()
     const [page, setPage] = useState(1);
     const [searchValue, setSearchValue] = useState("");
@@ -112,11 +110,11 @@ export default function Members() {
 
         const timeout = setTimeout(async () => {
             try {
-                const membersResponse: MemberResponse = await getMembers(searchValue, page, abortController.signal);
-                setMembers(membersResponse.data);
-                setPagingInfo(membersResponse.paging)
+                const committeesResponse: CommitteesResponse = await getCommittees(searchValue, page, abortController.signal);
+                setCommittees(committeesResponse.data);
+                setPagingInfo(committeesResponse.paging)
             } catch (error) {
-                console.error("Error fetching members:", error);
+                console.error("Error fetching committee:", error);
             }
             setIsLoading(false);
         }, 500);
@@ -135,17 +133,17 @@ export default function Members() {
 
     return (
         <>
-            <MemberListData/>
+            <CommitteeListData/>
 
             <div className="m-10">
-                <span className="text-3xl font-bold text-gray-700 mb-10">Members</span>
+                <span className="text-3xl font-bold text-gray-700 mb-10">Committees</span>
             </div>
 
             <div className="m-10">
 
                 <div className="mb-5">
                     <TextField
-                        id="member-search"
+                        id="committee-search"
                         placeholder={"Search"}
                         variant="outlined"
                         onChange={handleSearchChange}
@@ -166,8 +164,8 @@ export default function Members() {
                             <TableRow>
                                 <StyledTableCell className="w-1/12 hidden md:block">ID</StyledTableCell>
                                 <StyledTableCell className="w-1/3">Name</StyledTableCell>
-                                <StyledTableCell className="w-1/3">MC</StyledTableCell>
-                                <StyledTableCell className="w-1/3">LC</StyledTableCell>
+                                <StyledTableCell className="w-1/3">Nation</StyledTableCell>
+                                <StyledTableCell className="w-1/3">Type</StyledTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -181,7 +179,7 @@ export default function Members() {
                                 </StyledTableRow>
                             }
 
-                            {!isLoading && members.length == 0 &&
+                            {!isLoading && committees.length == 0 &&
                                 <StyledTableRow>
                                     <StyledTableCell component="th" scope="row" colSpan={4}>
                                         <div className="flex justify-center items-center">
@@ -191,20 +189,20 @@ export default function Members() {
                                 </StyledTableRow>
                             }
 
-                            {!isLoading && members.length > 0 &&
-                                members.map((member: Member) => (
+                            {!isLoading && committees.length > 0 &&
+                                committees.map((committee: Committee) => (
                                     <StyledTableRow
-                                        key={member.id}
+                                        key={committee.id}
                                         sx={{"&:last-child td, &:last-child th": {border: 0}}}
                                     >
                                         <StyledTableCell className="hidden md:block">
-                                            <Link href={`/members/${member.id}`}>{member.id}</Link>
+                                            <Link href={`/committees/${committee.id}`}>{committee.id}</Link>
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            <MemberChip member={member} truncateName={true}/>
+                                            <Link href={`/committees/${committee.id}`}>{committee.full_name}</Link>
                                         </StyledTableCell>
-                                        <StyledTableCell>{member.home_mc!.full_name}</StyledTableCell>
-                                        <StyledTableCell>{member.home_lc!.full_name}</StyledTableCell>
+                                        <StyledTableCell>{committee.address_detail && committee.address_detail.country}</StyledTableCell>
+                                        <StyledTableCell>{committee.tag}</StyledTableCell>
                                     </StyledTableRow>
                                 ))
                             }

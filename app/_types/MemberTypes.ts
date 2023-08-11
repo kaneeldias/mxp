@@ -17,14 +17,14 @@ export type Member = {
     member_positions?: Position[],
 }
 
-export type MemberPaging = {
+export type Paging = {
     total_items: number;
     total_pages: number;
     current_page: number;
 }
 
 export type MemberResponse = {
-    paging: MemberPaging;
+    paging: Paging;
     data: Member[];
 }
 

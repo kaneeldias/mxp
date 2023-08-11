@@ -90,8 +90,10 @@ export function getHomeBreadcrumbs(): Breadcrumb[] {
             label:
                 (
                     <>
-                        <HomeIcon fontSize="large" className="hidden md:block"/>
-                        <HomeIcon fontSize="small" className="block md:hidden"/>
+                        <HomeIcon fontSize="large"
+                                  className="hidden md:block hover:text-aiesec-blue transition-all duration-s300"/>
+                        <HomeIcon fontSize="small"
+                                  className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>
                     </>
                 ), href: "/"
 
