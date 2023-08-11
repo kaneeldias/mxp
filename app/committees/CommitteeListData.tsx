@@ -25,7 +25,7 @@ export function getCommitteesStartBreadcrumbs(): Breadcrumb[] {
                     <ApartmentIcon fontSize="small"
                                    className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>
                 </>
-            ), href: "/committee"
+            ), href: "/committees"
     });
     return breadcrumbs;
 }
