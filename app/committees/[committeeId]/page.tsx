@@ -1,10 +1,12 @@
-import React from "react";
+import React, {Suspense} from "react";
 import {CommitteeService} from "@/_services/CommitteeService";
 import {headers} from "next/headers";
 import PresidentBox from "@/app/_components/PresidentBox";
 import VicePresidentBox from "@/app/_components/VicePresidentBox";
 import CommitteeData from "@/app/committees/[committeeId]/CommitteeData";
 import CommitteeTypeTag from "@/app/_components/CommitteeTypeTag";
+import CommitteeDepartments from "@/app/committees/[committeeId]/CommitteeDepartments";
+import {CircularProgress} from "@mui/material";
 
 
 export default async function Committee({params}: { params: { committeeId: string } }) {
@@ -33,7 +35,7 @@ export default async function Committee({params}: { params: { committeeId: strin
                 <div className="flex flex-col md:flex-col mt-10 md:w-2/3">
                     <div className="md:text-2xl md:ml-10 font-bold text-gray-600">Vice Presidents</div>
                     <div
-                        className="flex flex-row flex-wrap md:max-h-[15rem]">
+                        className="flex flex-row flex-wrap">
                         {eb.vicePresidents.map((vp, index) => (
                             <div key={index} className="flex w-1/2 md:w-1/5">
                                 <VicePresidentBox vicePresident={vp}/>
@@ -42,6 +44,20 @@ export default async function Committee({params}: { params: { committeeId: strin
                     </div>
                 </div>
             </div>
+
+            <div className="mt-10 flex-col md:inline-block md:min-w-[400px]">
+                <Suspense fallback={
+                    <>
+                        <div className="md:text-2xl font-bold text-gray-600">Membership</div>
+                        <div className="flex flex-col py-5">
+                            <CircularProgress/>
+                        </div>
+                    </>
+                }>
+                    <CommitteeDepartments committeeId={params.committeeId} termId="22138"/>
+                </Suspense>
+            </div>
+
         </>
     )
 }

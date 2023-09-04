@@ -6,20 +6,45 @@ import {Committee} from "@/app/_types/CommitteeTypes";
 
 export interface President {
     id: string,
-    name: string,
-    profilePhoto: string
+    full_name: string,
+    profile_photo: string
 }
 
 export interface VicePresident {
     id: string,
-    name: string,
+    full_name: string,
     title: string,
-    profilePhoto: string
+    profile_photo: string
 }
 
 export interface ExecutiveBoard {
     president: President;
     vicePresidents: VicePresident[];
+}
+
+export interface Department {
+    id: string;
+    name: string;
+    functions: Function[]
+}
+
+export interface Function {
+    vp_id: string;
+    vicePresident: VicePresident | null;
+    teams: Team[];
+}
+
+export interface Member {
+    id: string,
+    full_name: string,
+    title: string,
+    profile_photo: string
+}
+
+export interface Team {
+    id: string;
+    teamLeader: Member | null;
+    members: Member[];
 }
 
 export class CommitteeService {
@@ -188,9 +213,9 @@ export class CommitteeService {
                 if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP') {
                     vicePresidents.push({
                         id: member.node.person.id,
-                        name: member.node.person.full_name,
+                        full_name: member.node.person.full_name,
                         title: member.node.title,
-                        profilePhoto: member.node.person.profile_photo
+                        profile_photo: member.node.person.profile_photo
                     })
                 }
             });
@@ -198,14 +223,165 @@ export class CommitteeService {
 
         const president: President = {
             id: expaResponse.member_position.person.id,
-            name: expaResponse.member_position.person.full_name,
-            profilePhoto: expaResponse.member_position.person.profile_photo
+            full_name: expaResponse.member_position.person.full_name,
+            profile_photo: expaResponse.member_position.person.profile_photo
         }
 
         return {
             president: president,
             vicePresidents: vicePresidents
         };
+    }
+
+    public async getDepartments(committeeId: string, termId: string): Promise<Department[]> {
+        const httpLink = createHttpLink({uri: 'https://gis-api.aiesec.org/graphql'});
+
+        const authLink = setContext(async (_, {headers}) => {
+            return {
+                headers: {
+                    ...headers,
+                    Authorization: this.accessToken
+                }
+            };
+        });
+
+        const client = new ApolloClient({
+            link: authLink.concat(httpLink),
+            cache: new InMemoryCache()
+        });
+
+        const query = gql`
+            {
+              committeeTerm(id: "${committeeId}" term_id: "${termId}") {
+                committee_departments {
+                  total_count
+                  edges {
+                    node {
+                      id
+                      name
+                      member_positions {
+                        edges {
+                          node {
+                            id
+                            title
+                            person {
+                              id
+                              full_name
+                              profile_photo
+                            }
+                            role {
+                              id
+                              name
+                            }
+                            team_id
+                            vp_id
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+	    `;
+
+        const expaResponse = await client.query({query: query})
+            .then((data: any) => {
+                return data.data.committeeTerm;
+            })
+            .catch((error: ApolloError) => {
+                return error
+            });
+
+        const departments: Department[] = [];
+        expaResponse.committee_departments.edges.forEach((dept: any) => {
+
+            const department: Department = {
+                id: dept.node.id,
+                name: dept.node.name,
+                functions: []
+            }
+
+            dept.node.member_positions.edges.forEach((member: any) => {
+                const role = member.node.role.name;
+                const vp_id = member.node.vp_id;
+
+                let func = department.functions.find((func) => {
+                    return func.vp_id === vp_id;
+                });
+                if (func === undefined) {
+                    func = {
+                        vp_id: vp_id,
+                        vicePresident: null,
+                        teams: []
+                    }
+                    department.functions.push(func);
+                }
+
+                if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP') {
+                    func.vicePresident = {
+                        id: member.node.person.id,
+                        full_name: member.node.person.full_name,
+                        title: member.node.title,
+                        profile_photo: member.node.person.profile_photo
+                    }
+                } else if (role === 'TL' || role === 'ESTL') {
+                    const teamId = member.node.team_id;
+                    let team = func.teams.find((team) => {
+                        return team.id === teamId;
+                    });
+                    if (team === undefined) {
+                        team = {
+                            id: teamId,
+                            teamLeader: {
+                                id: member.node.person.id,
+                                full_name: member.node.person.full_name,
+                                title: member.node.title,
+                                profile_photo: member.node.person.profile_photo
+                            },
+                            members: []
+                        }
+                        func.teams.push(team);
+                    } else {
+                        team.teamLeader = ({
+                            id: member.node.person.id,
+                            full_name: member.node.person.full_name,
+                            title: member.node.title,
+                            profile_photo: member.node.person.profile_photo
+                        });
+                    }
+                } else {
+                    const teamId = member.node.team_id;
+                    let team = func.teams.find((team) => {
+                        return team.id === teamId;
+                    });
+                    if (team === undefined) {
+                        team = {
+                            id: teamId,
+                            teamLeader: null,
+                            members: [{
+                                id: member.node.person.id,
+                                full_name: member.node.person.full_name,
+                                title: member.node.title,
+                                profile_photo: member.node.person.profile_photo
+                            }]
+                        }
+                        func.teams.push(team);
+                    } else {
+                        team.members.push({
+                            id: member.node.person.id,
+                            full_name: member.node.person.full_name,
+                            title: member.node.title,
+                            profile_photo: member.node.person.profile_photo
+                        });
+                    }
+                }
+            });
+
+            departments.push(department);
+        });
+
+        return departments;
     }
 
 }
