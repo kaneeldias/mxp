@@ -15,9 +15,7 @@ export default function MembersLayout({children,}: { children: React.ReactNode }
 
                 <div className="w-full">
                     <AuthComponent/>
-                    <div className="p-5 md:p-10">
-                        {children}
-                    </div>
+                    {children}
                 </div>
             </div>
         </>

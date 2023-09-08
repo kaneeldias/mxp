@@ -91,7 +91,7 @@ export function getHomeBreadcrumbs(): Breadcrumb[] {
                 (
                     <>
                         <HomeIcon fontSize="large"
-                                  className="hidden md:block hover:text-aiesec-blue transition-all duration-s300"/>
+                                  className="hidden md:block hover:text-aiesec-blue transition-all duration-300"/>
                         <HomeIcon fontSize="small"
                                   className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>
                     </>
