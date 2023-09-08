@@ -23,7 +23,7 @@ export default function PositionInfoBox(props: PositionInfoBox) {
                             <Image
                                 src={position?.person.profile_photo!}
                                 fill
-                                objectFit="cover"
+                                sizes={"100%"}
                                 alt={`${position?.person.full_name} profile photo`}
                                 className="rounded-full"
                             />

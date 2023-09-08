@@ -19,7 +19,7 @@ export default function MemberInfoCard(props: MemberInfoCardProps) {
                     <Image
                         src={memberInfo.profile_photo}
                         fill
-                        objectFit="cover"
+                        sizes={"100%"}
                         alt="Profile photo"
                         className="rounded-full"
                         priority
