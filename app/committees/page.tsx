@@ -65,10 +65,8 @@ const getCommittees = async (
     signal: AbortSignal
 ): Promise<CommitteesResponse> => {
 
-    console.log(process.env.NEXT_PUBLIC_BASE_URL);
     const url = new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/committee`);
     url.searchParams.set("page", page.toString());
-    console.log(url.toString());
     if (searchValue && searchValue !== "") {
         url.searchParams.set("search", searchValue);
     }
