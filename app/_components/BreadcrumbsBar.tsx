@@ -45,14 +45,16 @@ export default function BreadcrumbsBar() {
         if (breadcrumb.href) {
             breadcrumbsJSX.push(
                 <Link key={index + 1} color="inherit" href={breadcrumb.href}
-                      className={`hover:underline text-xs md:text-xl ${styles}`}
+                      className={`hover:underline text-xs md:text-[16px] ${styles}`}
                 >
                     {breadcrumb.label}
                 </Link>
             );
         } else {
             breadcrumbsJSX.push(
-                <span key={index + 1} color="inherit" className={`${styles}`}>
+                <span key={index + 1} color="inherit"
+                      className={`hover:underline text-xs md:text-lg ${styles}`}
+                >
                     {breadcrumb.label}
                 </span>
             );
@@ -63,7 +65,7 @@ export default function BreadcrumbsBar() {
         <>
             <div className="hidden md:block">
                 <Breadcrumbs
-                    separator={<NavigateNextIcon fontSize="large"/>}
+                    separator={<NavigateNextIcon fontSize="small"/>}
                     aria-label="breadcrumb"
                     className="text-md"
                 >
@@ -90,7 +92,7 @@ export function getHomeBreadcrumbs(): Breadcrumb[] {
             label:
                 (
                     <>
-                        <HomeIcon fontSize="large"
+                        <HomeIcon fontSize="medium"
                                   className="hidden md:block hover:text-aiesec-blue transition-all duration-300"/>
                         <HomeIcon fontSize="small"
                                   className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>

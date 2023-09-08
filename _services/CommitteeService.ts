@@ -18,7 +18,7 @@ export interface VicePresident {
 }
 
 export interface ExecutiveBoard {
-    president: President;
+    president: President | null,
     vicePresidents: VicePresident[];
 }
 
@@ -210,7 +210,7 @@ export class CommitteeService {
         expaResponse.committee_departments.edges.forEach((department: any) => {
             department.node.member_positions.edges.forEach((member: any) => {
                 const role = member.node.role.name;
-                if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP') {
+                if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP' || role === 'RM') {
                     vicePresidents.push({
                         id: member.node.person.id,
                         full_name: member.node.person.full_name,
@@ -221,10 +221,13 @@ export class CommitteeService {
             });
         });
 
-        const president: President = {
-            id: expaResponse.member_position.person.id,
-            full_name: expaResponse.member_position.person.full_name,
-            profile_photo: expaResponse.member_position.person.profile_photo
+        let president: President | null = null;
+        if (expaResponse.member_position) {
+            president = {
+                id: expaResponse.member_position.person.id,
+                full_name: expaResponse.member_position.person.full_name,
+                profile_photo: expaResponse.member_position.person.profile_photo
+            }
         }
 
         return {
@@ -318,7 +321,7 @@ export class CommitteeService {
                     department.functions.push(func);
                 }
 
-                if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP') {
+                if (role === 'LCVP' || role === 'MCVP' || role === 'AIVP' || role === 'RM') {
                     func.vicePresident = {
                         id: member.node.person.id,
                         full_name: member.node.person.full_name,

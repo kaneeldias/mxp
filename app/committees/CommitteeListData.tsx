@@ -20,7 +20,7 @@ export function getCommitteesStartBreadcrumbs(): Breadcrumb[] {
         label:
             (
                 <>
-                    <ApartmentIcon fontSize="large"
+                    <ApartmentIcon fontSize="medium"
                                    className="hidden md:block hover:text-aiesec-blue transition-all duration-300"/>
                     <ApartmentIcon fontSize="small"
                                    className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>

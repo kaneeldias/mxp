@@ -9,7 +9,7 @@ export default async function CommitteeDepartments({committeeId, termId}: { comm
 
     return (
         <>
-            <div className="md:text-2xl font-bold text-gray-600">Membership</div>
+            <div className="md:text-xl font-bold text-gray-600">Membership</div>
 
             <CommitteeDepartmentsList departments={departments}/>
         </>

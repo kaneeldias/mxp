@@ -20,7 +20,7 @@ export function getMembersStartBreadcrumbs(): Breadcrumb[] {
         label:
             (
                 <>
-                    <PeopleIcon fontSize="large"
+                    <PeopleIcon fontSize="medium"
                                 className="hidden md:block hover:text-aiesec-blue transition-all duration-300"/>
                     <PeopleIcon fontSize="small"
                                 className="block md:hidden hover:text-aiesec-blue transition-all duration-300"/>

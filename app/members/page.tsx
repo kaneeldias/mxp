@@ -201,7 +201,7 @@ export default function Members() {
                                             <Link href={`/members/${member.id}`}>{member.id}</Link>
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            <MemberChip member={member} truncateName={true}/>
+                                            <MemberChip member={member} truncateName={false}/>
                                         </StyledTableCell>
                                         <StyledTableCell>{member.home_mc!.full_name}</StyledTableCell>
                                         <StyledTableCell>{member.home_lc!.full_name}</StyledTableCell>
