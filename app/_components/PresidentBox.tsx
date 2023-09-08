@@ -21,7 +21,7 @@ export default function PresidentBox(props: PresidentBoxProps) {
                             <Image
                                 src={president.profile_photo}
                                 fill
-                                objectFit="cover"
+                                sizes={"100%"}
                                 alt={`${president.full_name} profile photo`}
                                 className="rounded-full"
                             />

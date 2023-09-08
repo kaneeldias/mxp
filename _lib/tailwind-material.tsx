@@ -1,6 +1,6 @@
 "use client";
 
-import {Accordion, AccordionBody, AccordionHeader, Avatar, Card, Chip} from "@material-tailwind/react";
+import {Accordion, AccordionBody, AccordionHeader, Avatar, Card, Chip, Tooltip} from "@material-tailwind/react";
 
 export {
     Chip,
@@ -8,5 +8,6 @@ export {
     Card,
     Accordion,
     AccordionBody,
-    AccordionHeader
+    AccordionHeader,
+    Tooltip
 }
