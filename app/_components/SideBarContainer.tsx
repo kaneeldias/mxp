@@ -17,7 +17,7 @@ export default function SideBarContainer() {
 
             {open &&
                 <div className="top-0 left-0 z-40 fixed">
-                    <div className="backdrop-blur-sm w-screen h-screen">
+                    <div className="backdrop-blur-sm w-screen h-screen" onClick={toggleOpen}>
                         <div
                             className="bg-aiesec-blue h-screen flex p-2 hadow-blue-gray-900/5 absolute top-0 left-0 flex-col w-[300px]">
 
@@ -27,7 +27,7 @@ export default function SideBarContainer() {
 
                             <div className="text-white font-bold mt-10 flex flex-col space-y-2">
 
-                                <Link href="/profile">
+                                <Link href="/profile" onClick={toggleOpen}>
                                     <div
                                         className="flex flex-row hover:bg-blue-400 transition-all duration-300 p-2 py-3 rounded-md">
                                         <FaceIcon fontSize="medium"/>
@@ -35,7 +35,7 @@ export default function SideBarContainer() {
                                     </div>
                                 </Link>
 
-                                <Link href="/members">
+                                <Link href="/members" onClick={toggleOpen}>
                                     <div
                                         className="flex flex-row hover:bg-blue-400 transition-all duration-300 p-2 py-3 rounded-md">
                                         <PeopleIcon fontSize="medium"/>
@@ -43,7 +43,7 @@ export default function SideBarContainer() {
                                     </div>
                                 </Link>
 
-                                <Link href="/committees">
+                                <Link href="/committees" onClick={toggleOpen}>
                                     <div
                                         className="flex flex-row hover:bg-blue-400 transition-all duration-300 p-2 py-3 rounded-md">
                                         <ApartmentIcon fontSize="medium"/>
