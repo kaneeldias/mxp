@@ -8,23 +8,6 @@ import {getCurrentPerson} from "@/app/api/member/current/route";
 import {headers} from "next/headers";
 
 export default async function Home() {
-
-    // const finalWelcomeMessage = "for our innovations to succeed, we need to ensure that our platforms support it lol"
-    // const [welcomeMessage, setWelcomeMessage] = useState('');
-
-    // let i: number = 0;
-    // useEffect(() => {
-    //     const intervalId = setInterval(() => {
-    //         i++;
-    //         setWelcomeMessage((prev) => prev + finalWelcomeMessage[i - 1]);
-    //         if (i >= finalWelcomeMessage.length) {
-    //             clearInterval(intervalId)
-    //         }
-    //     }, 75)
-    //
-    //     return () => clearInterval(intervalId);
-    // }, []);
-
     let profile: Member = {} as Member
     if (checkLoggedIn()) {
         profile = await getCurrentPerson(headers().get("Authorization")!);
