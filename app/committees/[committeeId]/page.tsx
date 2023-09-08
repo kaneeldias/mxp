@@ -28,9 +28,11 @@ export default async function Committee({params}: { params: { committeeId: strin
 
             <div className="flex flex-col md:flex-row">
 
-                <div className={"flex mt-10 md:w-1/3"}>
-                    <PresidentBox president={eb.president}/>
-                </div>
+                {eb.president &&
+                    <div className={"flex mt-10 md:w-1/3"}>
+                        <PresidentBox president={eb.president}/>
+                    </div>
+                }
 
                 <div className="flex flex-col md:flex-col mt-10 md:w-2/3">
                     <div className="md:text-2xl md:ml-10 font-bold text-gray-600">Vice Presidents</div>
