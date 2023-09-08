@@ -16,12 +16,12 @@ export default async function ProfileBox() {
         <div className="flex flex-row justify-center items-stretch mr-2">
             {profile && profile.profile_photo &&
                 <>
-                    <div className="w-5 h-5 md:w-10 md:h-10 relative">
+                    <div className="w-5 h-5 md:w-8 md:h-8 relative">
                         <Link href={`/members/${profile.id}`}>
                             <Avatar src={profile.profile_photo!}
                                     alt={`Profile photo for ${profile.full_name}`}
                                     variant="rounded"
-                                    className="md:w-10 md:h-10 w-5 h-5 cursor-pointer"
+                                    className="md:w-8 md:h-8 w-5 h-5 cursor-pointer"
                             />
                         </Link>
                     </div>

@@ -29,7 +29,7 @@ export default function CommitteeDepartmentsList({departments}: { departments: D
                         {department.name}
                     </AccordionHeader>
                     <AccordionBody>
-                        <div className={"space-y-6 md:space-y-14"}>
+                        <div className={"space-y-6 md:space-y-8"}>
                             {department.functions.map((func, index) => (<div key={index}>
                                 {func.vicePresident && <div className="md:inline-block">
                                     <div className="text-sm font-bold">{func.vicePresident.title}</div>
@@ -38,12 +38,12 @@ export default function CommitteeDepartmentsList({departments}: { departments: D
 
                                 {func.teams.map((team: Team, index: number) => (
                                     <div key={index}
-                                         className="flex flex-col md:flex-row justify-between py-2 my-3 border-2 border-gray-200 p-3 rounded-md border-dashed space-y-3">
-                                        {team.teamLeader && <div>
+                                         className="flex flex-col md:flex-row py-2 my-3 border-2 border-gray-200 p-3 rounded-md border-dashed space-y-3 md:space-x-10">
+                                        {team.teamLeader && <div className="md:w-1/2">
                                             <div className="text-sm font-bold">{team.teamLeader.title}</div>
                                             <MemberChip member={team.teamLeader} truncateName={false}/>
                                         </div>}
-                                        <div className="text-xs ml-3 space-y-2 flex flex-col">
+                                        <div className="text-xs ml-3 space-y-2 flex flex-col md:w-1/2">
                                             {team.members.map((member, index) => (<div key={index}>
                                                 <div className="text-xs">{member.title}</div>
                                                 <MemberChip key={index} member={member} truncateName={false}/>
