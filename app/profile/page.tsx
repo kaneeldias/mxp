@@ -7,7 +7,6 @@ import {redirect} from "next/navigation";
 export default async function Profile() {
     let profile: Member = {} as Member
     if (checkLoggedIn()) {
-        console.log("Auth:", headers().get("Authorization"));
         profile = await getCurrentPerson(headers().get("Authorization")!);
         redirect(`/members/${profile.id}`)
     } else {

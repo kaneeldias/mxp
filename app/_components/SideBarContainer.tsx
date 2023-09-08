@@ -6,20 +6,27 @@ import Link from "next/link";
 
 export default function SideBarContainer() {
     const [open, setOpen] = useState(false);
-    const toggleOpen = () => setOpen((cur) => !cur);
+
+    const toggleOpen = (e: React.MouseEvent): void => {
+        e.stopPropagation();
+        setOpen((cur) => !cur);
+    }
 
     return (
         <>
             <div className="md:hidden" onClick={toggleOpen}>
                 <MenuRounded fontSize="medium"
-                             className="text-gray-600 hover:text-aiesec-blue cursor-pointer transition-all duration-300 ml-2 mr-5"/>
+                             className="text-gray-600 hover:text-aiesec-blue cursor-pointer transition-all duration-300 ml-2 mr-5"
+                />
             </div>
 
             {open &&
                 <div className="top-0 left-0 z-40 fixed">
                     <div className="backdrop-blur-sm w-screen h-screen" onClick={toggleOpen}>
                         <div
-                            className="bg-aiesec-blue h-screen flex p-2 hadow-blue-gray-900/5 absolute top-0 left-0 flex-col w-[300px]">
+                            className="bg-aiesec-blue h-screen flex p-2 hadow-blue-gray-900/5 absolute top-0 left-0 flex-col w-[300px]"
+                            onClick={(e) => e.stopPropagation()}
+                        >
 
                             <MenuRounded fontSize="medium"
                                          className="text-white hover:text-gray-300 cursor-pointer transition-all duration-300 mr-5 ml-2"
