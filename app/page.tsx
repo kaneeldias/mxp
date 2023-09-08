@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import AButton from "@/app/_components/AButton";
-import {FaceIcon, LoginIcon, PeopleIcon} from "@/_lib/icons-material";
+import {ApartmentIcon, FaceIcon, LoginIcon, PeopleIcon} from "@/_lib/icons-material";
 import Link from "next/link";
 import {checkLoggedIn} from "@/_utils/auth_utils";
 import {Member} from "@/app/_types/MemberTypes";
@@ -53,6 +53,15 @@ export default async function Home() {
                                 <div className="space-x-2 items-center justify-center">
                                     <PeopleIcon/>
                                     <span>Members</span>
+                                </div>
+                            </AButton>
+                        </Link>
+
+                        <Link href="/committees">
+                            <AButton variant="white">
+                                <div className="space-x-2 items-center justify-center">
+                                    <ApartmentIcon/>
+                                    <span>Committees</span>
                                 </div>
                             </AButton>
                         </Link>
