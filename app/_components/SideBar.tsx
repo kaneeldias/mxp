@@ -1,6 +1,6 @@
 "use client"
 
-import {ApartmentIcon, FaceIcon, MenuRounded, PeopleIcon} from "@/_lib/icons-material";
+import {ApartmentIcon, FaceIcon, Logout, MenuRounded, PeopleIcon} from "@/_lib/icons-material";
 import React, {useState} from "react";
 import Link from "next/link";
 
@@ -35,31 +35,48 @@ export default function SideBar() {
                                      onClick={toggleOpen}/>
 
                         <div
-                            className={`${open ? 'translate-x-0' : '-translate-x-full'} text-gray-700 font-bold mt-10 flex flex-col space-y-2 transition-all duration-300 delay-300`}>
+                            className={`${open ? 'translate-x-0' : '-translate-x-full'} text-gray-700 font-bold mt-10 flex flex-col space-y-2 transition-all duration-300 delay-[150ms] h-full`}>
 
-                            <Link href="/profile" onClick={toggleOpen}>
-                                <div
-                                    className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
-                                    <FaceIcon fontSize="medium"/>
-                                    <span className="ml-5">My Profile</span>
-                                </div>
-                            </Link>
+                            <div className="flex flex-col justify-between h-full">
 
-                            <Link href="/members" onClick={toggleOpen}>
-                                <div
-                                    className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
-                                    <PeopleIcon fontSize="medium"/>
-                                    <span className="ml-5">Members</span>
-                                </div>
-                            </Link>
+                                <div>
+                                    <Link href="/profile" onClick={toggleOpen}>
+                                        <div
+                                            className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
+                                            <FaceIcon fontSize="medium"/>
+                                            <span className="ml-5">My Profile</span>
+                                        </div>
+                                    </Link>
 
-                            <Link href="/committees" onClick={toggleOpen}>
-                                <div
-                                    className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
-                                    <ApartmentIcon fontSize="medium"/>
-                                    <span className="ml-5">Committees</span>
+                                    <Link href="/members" onClick={toggleOpen}>
+                                        <div
+                                            className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
+                                            <PeopleIcon fontSize="medium"/>
+                                            <span className="ml-5">Members</span>
+                                        </div>
+                                    </Link>
+
+                                    <Link href="/committees" onClick={toggleOpen}>
+                                        <div
+                                            className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
+                                            <ApartmentIcon fontSize="medium"/>
+                                            <span className="ml-5">Committees</span>
+                                        </div>
+                                    </Link>
                                 </div>
-                            </Link>
+
+                                <div>
+                                    <Link href="/auth/logout" onClick={toggleOpen}>
+                                        <div
+                                            className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
+                                            <Logout fontSize="medium"/>
+                                            <span className="ml-5">Log out</span>
+                                        </div>
+                                    </Link>
+
+                                </div>
+
+                            </div>
 
                         </div>
 

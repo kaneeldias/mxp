@@ -14,7 +14,7 @@ const tooltipStyles = "text-sm font-bold text-white bg-aiesec-blue rounded-md p-
 export default async function LeftNav() {
     return (
         <div
-            className="sticky top-0 bg-aiesec-blue p-3 pt-4 h-screen text-white justify-center items-center space-y-7">
+            className="sticky top-0 bg-aiesec-blue p-3 pt-4 h-screen text-white items-center space-y-7">
             <Image
                 src="/aiesec_member_logo_vertical_white.svg"
                 width={50}
@@ -23,8 +23,8 @@ export default async function LeftNav() {
                 priority
             />
 
-            <div cla>
-                <div>
+            <div className="flex flex-col justify-between h-full">
+                <div className="space-y-7">
                     <div className="justify-center items-center flex">
                         <Tooltip content="Members" placement="right" animate={tooltipAnimation}
                                  className={tooltipStyles}>
@@ -44,7 +44,7 @@ export default async function LeftNav() {
                     </div>
                 </div>
 
-                <div>
+                <div className="flex flex-col">
                     <div className="justify-center items-center flex">
                         <Tooltip content="Log out" placement="right" animate={tooltipAnimation}
                                  className={tooltipStyles}>
@@ -53,7 +53,10 @@ export default async function LeftNav() {
                             </Link>
                         </Tooltip>
                     </div>
+
+                    <div className="mb-50 h-[80px]"></div>
                 </div>
+
             </div>
 
         </div>
