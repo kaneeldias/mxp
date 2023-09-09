@@ -7,6 +7,7 @@ import LoginIcon from "@mui/icons-material/Login";
 import FaceIcon from "@mui/icons-material/Face";
 import ApartmentIcon from "@mui/icons-material/Apartment";
 import MenuRounded from "@mui/icons-material/MenuRounded";
+import Logout from "@mui/icons-material/Logout";
 
 export {
     NavigateNextIcon,
@@ -15,5 +16,6 @@ export {
     LoginIcon,
     FaceIcon,
     ApartmentIcon,
-    MenuRounded
+    MenuRounded,
+    Logout
 }

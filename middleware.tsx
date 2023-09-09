@@ -2,7 +2,8 @@ import {NextRequest, NextResponse} from "next/server";
 import {getTokensIfNecessary} from "@/_utils/auth_utils";
 
 export async function middleware(request: NextRequest) {
-    console.debug("Running middleware at", request.nextUrl.pathname);
+    const pathName: string = request.nextUrl.pathname;
+    console.debug("Running middleware at: ", pathName);
 
     let tokens;
     try {
@@ -54,7 +55,9 @@ export async function middleware(request: NextRequest) {
         });
     }
 
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.cookies.set("redirect_uri", pathName);
+    return response;
 }
 
 export const config = {
