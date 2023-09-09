@@ -1,4 +1,5 @@
 import {NextRequest, NextResponse} from "next/server";
+import {cookies} from "next/headers";
 
 const getAccessToken = async (code: string): Promise<any> => {
     const requestData = {
@@ -30,10 +31,15 @@ const getAccessToken = async (code: string): Promise<any> => {
 export async function GET(request: NextRequest) {
     const code: string = request.nextUrl.searchParams.get("code") as string;
     const authResponse = await getAccessToken(code);
+    let response: NextResponse;
 
-    const response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}`, {
-        status: 302,
-    });
+    const pathName = cookies().get("redirect_uri")?.value;
+    cookies().delete("redirect_uri");
+    if (!pathName) {
+        response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/`, {status: 302});
+    } else {
+        response = NextResponse.redirect(`${process.env.NEXT_PUBLIC_BASE_URL}/${pathName}`, {status: 302});
+    }
 
     response.cookies.set("access_token", authResponse.access_token, {
         httpOnly: true,

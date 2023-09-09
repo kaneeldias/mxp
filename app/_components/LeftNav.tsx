@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {ApartmentIcon, PeopleIcon} from "@/_lib/icons-material";
+import {ApartmentIcon, Logout, PeopleIcon} from "@/_lib/icons-material";
 import React from "react";
 import Link from "next/link";
 import {Tooltip} from "@/_lib/tailwind-material";
@@ -23,22 +23,37 @@ export default async function LeftNav() {
                 priority
             />
 
-            <div className="justify-center items-center flex">
-                <Tooltip content="Members" placement="right" animate={tooltipAnimation}
-                         className={tooltipStyles}>
-                    <Link href="/members">
-                        <PeopleIcon fontSize="large"/>
-                    </Link>
-                </Tooltip>
-            </div>
+            <div cla>
+                <div>
+                    <div className="justify-center items-center flex">
+                        <Tooltip content="Members" placement="right" animate={tooltipAnimation}
+                                 className={tooltipStyles}>
+                            <Link href="/members">
+                                <PeopleIcon fontSize="large"/>
+                            </Link>
+                        </Tooltip>
+                    </div>
 
-            <div className="justify-center items-center flex">
-                <Tooltip content="Committees" placement="right" animate={tooltipAnimation}
-                         className={tooltipStyles}>
-                    <Link href="/committees">
-                        <ApartmentIcon fontSize="large"/>
-                    </Link>
-                </Tooltip>
+                    <div className="justify-center items-center flex">
+                        <Tooltip content="Committees" placement="right" animate={tooltipAnimation}
+                                 className={tooltipStyles}>
+                            <Link href="/committees">
+                                <ApartmentIcon fontSize="large"/>
+                            </Link>
+                        </Tooltip>
+                    </div>
+                </div>
+
+                <div>
+                    <div className="justify-center items-center flex">
+                        <Tooltip content="Log out" placement="right" animate={tooltipAnimation}
+                                 className={tooltipStyles}>
+                            <Link href="/auth/logout">
+                                <Logout fontSize="large"/>
+                            </Link>
+                        </Tooltip>
+                    </div>
+                </div>
             </div>
 
         </div>

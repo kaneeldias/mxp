@@ -10,7 +10,7 @@ export default async function Profile() {
         profile = await getCurrentPerson(headers().get("Authorization")!);
         redirect(`/members/${profile.id}`)
     } else {
-        redirect("/login")
+        redirect("/auth/login")
     }
 
 }
