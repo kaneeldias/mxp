@@ -63,21 +63,21 @@ export default function BreadcrumbsBar() {
 
     return (
         <>
-            <div className="hidden md:block">
+            <div className="hidden md:block flex-row items-center justify-center">
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small"/>}
                     aria-label="breadcrumb"
-                    className="text-md"
+                    className="flex text-md items-center justify-center h-full"
                 >
                     {breadcrumbsJSX}
                 </Breadcrumbs>
             </div>
 
-            <div className="block md:hidden">
+            <div className="block md:hidden flex-row items-center justify-center">
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small"/>}
                     aria-label="breadcrumb"
-                    className="text-xs md:text-xl"
+                    className="flex text-xs items-center justify-center h-full"
                 >
                     {breadcrumbsJSXMobile}
                 </Breadcrumbs>

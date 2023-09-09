@@ -21,9 +21,7 @@ export function getMemberBreadcrumbs(member: Member): Breadcrumb[] {
     breadcrumbs.push(
         {
             label: (
-                <div className="flex flex-row space-x-2 md:space-x-4 items-center justify-center">
-                    <MemberChip member={member} truncateName={true}/>
-                </div>
+                <MemberChip member={member} truncateName={true} largeText={true}/>
             )
         }
     );
