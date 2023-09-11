@@ -26,7 +26,7 @@ export default function CommitteeDepartmentsList({departments}: { departments: D
                         onClick={() => handleOpen(index)}
                         className={`text-sm hover:text-aiesec-blue ${open === index ? "text-aiesec-blue" : ""} transition-all duration-300`}
                     >
-                        {department.name}
+                        {department.name} ({getDepartmentMembershipCount(department)})
                     </AccordionHeader>
                     <AccordionBody>
                         <div className={"space-y-6 md:space-y-8"}>
@@ -73,4 +73,20 @@ function Icon({id, open}: { id: number, open: number }) {
             <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5"/>
         </svg>
     );
+}
+
+function getDepartmentMembershipCount(department: Department) {
+    let memberIds: string[] = [];
+    department.functions.forEach(func => {
+        func.teams.forEach(team => {
+            memberIds = memberIds.concat(team.members.map(member => member.id));
+            if (team.teamLeader) {
+                memberIds.push(team.teamLeader.id);
+            }
+        });
+        if (func.vicePresident) {
+            memberIds.push(func.vicePresident.id);
+        }
+    });
+    return new Set(memberIds).size;
 }

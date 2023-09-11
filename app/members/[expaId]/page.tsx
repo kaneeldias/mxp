@@ -22,7 +22,7 @@ export default async function MemberInfo({params}: { params: { expaId: string } 
         <>
             <MemberData member={memberInfo!}/>
 
-            <div className="m-2 md:m-5 flex justify-center w-full">
+            <div className="p-2 md:p-5 flex justify-center w-full">
 
                 <div
                     className="flex flex-col md:flex-row rounded-md justify-start items-start w-full md:space-x-10 md:p-10 p-4">

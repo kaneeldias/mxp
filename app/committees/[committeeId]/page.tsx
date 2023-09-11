@@ -59,7 +59,8 @@ export default async function Committee({params}: { params: { committeeId: strin
                             </div>
                         </>
                     }>
-                        <CommitteeDepartments committeeId={params.committeeId} termId="22138"/>
+                        <CommitteeDepartments committeeId={params.committeeId} termId="22138"
+                                              president={eb.president}/>
                     </Suspense>
                 </div>
             </div>
