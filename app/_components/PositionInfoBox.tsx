@@ -1,11 +1,10 @@
 "use client"
 
 import React from 'react';
-import {convertTerm} from "@/_utils/utils";
 import {Position} from "@/app/_types/MemberTypes";
 import Link from "next/link";
-import PositionStatusIndicator from "@/app/_components/PositionStatusIndicator";
 import Image from "next/image";
+import CommitteeChip from "@/app/_components/CommitteeChip";
 
 type PositionInfoBox = {
     position: Position;
@@ -35,10 +34,11 @@ export default function PositionInfoBox(props: PositionInfoBox) {
                         </Link>
                         <div className="text-lg md:text-3xl flex flex-row font-bold space-x-5 text-gray-800">
                             <div>{position?.title}</div>
-                            {position?.status && <PositionStatusIndicator type={position.status}/>}
+                            {/*{position?.status && <PositionStatusIndicator type={position.status}/>}*/}
                         </div>
-                        <div
-                            className="text-sm md:text-xl text-gray-600">{`${position?.office.full_name} (${convertTerm(position!.term.name)})`}</div>
+
+                        <CommitteeChip committee={position?.office} term={position.term.name}/>
+
                     </div>
                 </div>
             }

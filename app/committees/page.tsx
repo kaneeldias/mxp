@@ -20,6 +20,7 @@ import Search from "@mui/icons-material/Search";
 import Link from 'next/link'
 import {Committee, CommitteesResponse} from "@/app/_types/CommitteeTypes";
 import CommitteeListData from "@/app/committees/CommitteeListData";
+import CommitteeChip from "@/app/_components/CommitteeChip";
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     "& .MuiPaper-root": {
@@ -197,7 +198,7 @@ export default function Members() {
                                             <Link href={`/committees/${committee.id}`}>{committee.id}</Link>
                                         </StyledTableCell>
                                         <StyledTableCell>
-                                            <Link href={`/committees/${committee.id}`}>{committee.full_name}</Link>
+                                            <CommitteeChip committee={committee}/>
                                         </StyledTableCell>
                                         <StyledTableCell>{committee.address_detail && committee.address_detail.country}</StyledTableCell>
                                         <StyledTableCell>{committee.tag}</StyledTableCell>

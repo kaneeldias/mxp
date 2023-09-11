@@ -112,7 +112,9 @@ export async function getPosition(positionId: string, access_token: string): Pro
           name
         }
         office {
+          id
           full_name
+          tag
         }
         role {
           name

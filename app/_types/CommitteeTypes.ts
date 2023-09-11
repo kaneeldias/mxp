@@ -6,7 +6,7 @@ export interface Committee {
     address_detail?: {
         country: string;
     };
-    tag: string
+    tag?: string
 }
 
 export type CommitteesResponse = {

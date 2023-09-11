@@ -5,6 +5,7 @@ import {AppContext} from "@/app/_context/AppContext";
 import {Breadcrumb} from "@/app/_components/BreadcrumbsBar";
 import {Committee} from "@/app/_types/CommitteeTypes";
 import {getCommitteesStartBreadcrumbs} from "@/app/committees/CommitteeListData";
+import CommitteeChip from "@/app/_components/CommitteeChip";
 
 export default function CommitteeData({committee}: { committee: Committee }) {
     const context = useContext(AppContext);
@@ -19,7 +20,7 @@ export function getCommitteeBreadcrumbs(committee: Committee): Breadcrumb[] {
     let breadcrumbs = getCommitteesStartBreadcrumbs();
     breadcrumbs.push(
         {
-            label: `${truncateCommittee(committee.full_name)}`,
+            label: (<div><CommitteeChip committee={committee}/></div>),
             href: `/committees/${committee.id}`
         }
     );

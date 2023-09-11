@@ -1,9 +1,9 @@
 "use client"
 
 import React from 'react';
-import PositionStatusIndicator from "@/app/_components/PositionStatusIndicator";
 import {Position} from "@/app/_types/MemberTypes";
-import {convertDateToReadable, convertTerm} from "@/_utils/utils";
+import {convertDateToReadable} from "@/_utils/utils";
+import CommitteeChip from "@/app/_components/CommitteeChip";
 
 type MemberPositionCardProps = {
     position: Position;
@@ -18,11 +18,10 @@ export default function MemberPositionCard(props: MemberPositionCardProps) {
             key={position.id}>
             <div className="flex font-bold space-x-4 inline-flex">
                 <div className="text-md md:text-2xl text-gray-800">{position.title}</div>
-                <PositionStatusIndicator type={position.status}/>
-
+                {/*<PositionStatusIndicator type={position.status}/>*/}
             </div>
-            <div className="text-xs md:text-md text-gray-600 flex-shrink-0">
-                {position.office.full_name} ({convertTerm(position.term.name)})
+            <div className="text-xs md:text-md text-gray-600 flex-shrink-0 mt-2">
+                <CommitteeChip committee={position.office} term={position.term.name}/>
             </div>
             <div className="text-xs md:text-md text-gray-600 flex">
                 {convertDateToReadable(position.start_date)} to {convertDateToReadable(position.end_date)}

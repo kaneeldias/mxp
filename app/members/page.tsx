@@ -20,6 +20,7 @@ import Search from "@mui/icons-material/Search";
 import Link from 'next/link'
 import MemberListData from "@/app/members/MemberListData";
 import MemberChip from "@/app/_components/MemberChip";
+import CommitteeChip from "@/app/_components/CommitteeChip";
 
 const StyledTableContainer = styled(TableContainer)(() => ({
     "& .MuiPaper-root": {
@@ -203,8 +204,12 @@ export default function Members() {
                                         <StyledTableCell>
                                             <MemberChip member={member} truncateName={false}/>
                                         </StyledTableCell>
-                                        <StyledTableCell>{member.home_mc!.full_name}</StyledTableCell>
-                                        <StyledTableCell>{member.home_lc!.full_name}</StyledTableCell>
+                                        <StyledTableCell>
+                                            <CommitteeChip committee={member.home_mc!}/>
+                                        </StyledTableCell>
+                                        <StyledTableCell>
+                                            <CommitteeChip committee={member.home_lc!}/>
+                                        </StyledTableCell>
                                     </StyledTableRow>
                                 ))
                             }

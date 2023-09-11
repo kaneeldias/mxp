@@ -45,7 +45,6 @@ export default async function PositionInfo({params}: { params: { expaId: string,
                         {position.reports_to && <MiniInfoCard title="Team leader"
                                                               value={(
                                                                   <MemberChip member={position.reports_to}
-                                                                              truncateName={true}
                                                                               largeText={true}
                                                                   />
                                                               )}

@@ -2,10 +2,14 @@ export type Member = {
     id: string,
     full_name: string,
     home_lc?: {
+        id: string
         full_name: string;
+        tag: string;
     },
     home_mc?: {
+        id: string
         full_name: string;
+        tag: string;
     },
     is_aiesecer?: boolean,
     contact_detail?: {
@@ -54,6 +58,7 @@ export type Position = {
         name: string;
     }
     office: {
+        id: string;
         full_name: string;
     }
     person: {
