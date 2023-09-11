@@ -42,10 +42,14 @@ export async function GET(request: NextRequest) {
 				full_name
 				profile_photo
 				home_lc {
+				    id
 				    full_name
+				    tag
 				}
 				home_mc {
+				    id
 				    full_name
+				    tag
                 }
 				is_aiesecer
 				member_positions {

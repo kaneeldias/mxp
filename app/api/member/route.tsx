@@ -114,10 +114,14 @@ export async function getMemberInfo(expaId: string, accessToken: string) {
         id
         full_name
         home_lc {
+          id
           full_name
+          tag
         }
         home_mc {
+          id
           full_name
+          tag
         }
         is_aiesecer
         contact_detail {
@@ -145,7 +149,9 @@ export async function getMemberInfo(expaId: string, accessToken: string) {
             name
           }
           office {
+            id
             full_name
+            tag
           }
         }
       }
