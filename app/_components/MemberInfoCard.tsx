@@ -28,7 +28,7 @@ export default function MemberInfoCard(props: MemberInfoCardProps) {
             }
             <div className="flex flex-col justify-center space-y-1 md:space-y-3">
                 <div className="text-xl md:text-3xl font-bold text-gray-800">{memberInfo.full_name}</div>
-                <div className="flex md:flex-row md:space-x-2">
+                <div className="flex md:flex-row space-x-2">
                     <CommitteeChip committee={memberInfo.home_lc!}/>
                     <CommitteeChip committee={memberInfo.home_mc!} showPrefix={false}/>
                 </div>
