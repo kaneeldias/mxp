@@ -26,7 +26,7 @@ export default function SideBar() {
                     className={`${open ? 'opacity-100' : 'opacity-0'} bg-black bg-opacity-20 backdrop-blur-sm w-screen h-screen transition-all duration-300`}
                     onClick={toggleOpen}>
                     <div
-                        className={`${open ? 'translate-x-0' : '-translate-x-full'} bg-white h-screen flex p-2 absolute top-0 left-0 flex-col w-[300px] transition-all duration-300 shadow-blue-gray-900`}
+                        className={`${open ? 'translate-x-0' : '-translate-x-full'} bg-white h-[calc(100dvh)] flex p-2 absolute top-0 left-0 flex-col w-[300px] transition-all duration-300 shadow-blue-gray-900`}
                         onClick={(e) => e.stopPropagation()}
                     >
 
@@ -39,7 +39,7 @@ export default function SideBar() {
 
                             <div className="flex flex-col justify-between h-full">
 
-                                <div>
+                                <div className="space-y-2 flex flex-col">
                                     <Link href="/profile" onClick={toggleOpen}>
                                         <div
                                             className="flex flex-row hover:bg-gray-100 hover:text-aiesec-blue transition-all duration-300 p-2 py-3 rounded-md">
